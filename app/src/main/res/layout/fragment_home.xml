@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background3"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout
@@ -40,6 +41,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Danh hiệu: VIP"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:textColor="#03C50B"
+                android:id="@+id/textViewMark"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Điểm: 0"
                 android:textSize="18sp"/>
             
         </LinearLayout>
@@ -225,6 +236,7 @@
                 android:id="@+id/imageButtonTinhToan"/>
 
             <TextView
+                android:textColor="#fff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tạo game tính toán nhanh"
@@ -248,6 +260,7 @@
                 android:id="@+id/imageButtonTriNho"/>
 
             <TextView
+                android:textColor="#fff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tạo game trí nhớ"

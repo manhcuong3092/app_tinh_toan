@@ -27,11 +27,15 @@ import com.learn.tinhtoan.fragment.TodoFragment;
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
+    public static User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        currentUser = (User) intent.getSerializableExtra("user");
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setOnNavigationItemSelectedListener(bottomNavListener);

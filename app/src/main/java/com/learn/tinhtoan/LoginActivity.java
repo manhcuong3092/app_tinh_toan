@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void mapping() {
-        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin    = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);

@@ -54,6 +54,11 @@ public class Database extends SQLiteOpenHelper{
         return cursor.getInt(0);
     }
 
+    //ham tim username
+    public static Cursor findUserData(int id){
+        return LoginActivity.database.getData("SELECT * FROM DataUser WHERE IdUser = " + id);
+    }
+
     public Database(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

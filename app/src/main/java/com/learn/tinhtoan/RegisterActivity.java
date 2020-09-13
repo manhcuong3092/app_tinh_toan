@@ -156,9 +156,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void mapping() {
         btnRegister = findViewById(R.id.buttonRegister);
-        imgHinh = findViewById(R.id.imageViewHinh);
-        ibtnCamera = findViewById(R.id.imageButtonCamera);
-        ibtnFolder = findViewById(R.id.imageButtonFolder);
+        imgHinh     = findViewById(R.id.imageViewHinh);
+        ibtnCamera  = findViewById(R.id.imageButtonCamera);
+        ibtnFolder  = findViewById(R.id.imageButtonFolder);
         edtPassword = findViewById(R.id.edtPasswordRegister);
         edtPassword2 = findViewById(R.id.edtPasswordRegister2);
         edtUserName = findViewById(R.id.edtUsernameRegister);

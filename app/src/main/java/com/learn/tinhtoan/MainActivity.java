@@ -9,8 +9,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,6 +33,11 @@ import com.learn.tinhtoan.fragment.TodoFragment;
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    BottomNavigationView bottomNav;
+    Toolbar toolbar;
+    ImageView imgAvatar;
+    TextView txtName, txtEmail;
     public static User currentUser;
 
     @Override
@@ -34,18 +45,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mapping();
+
         Intent intent = getIntent();
         currentUser = (User) intent.getSerializableExtra("user");
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+        //bottom navbar
         bottomNav.setOnNavigationItemSelectedListener(bottomNavListener);
 
-        drawerLayout = findViewById(R.id.drawerLayout);
-        NavigationView navigationView = findViewById(R.id.navigationView);
+        //side bar
         navigationView.setNavigationItemSelectedListener(navListener);
 
         //Sửa theme là noActionBar
-        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar,
@@ -53,7 +64,25 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        //set cac gia tri cho navbar
+        byte[] avatar = currentUser.getImage();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(avatar, 0, avatar.length);
+        imgAvatar.setImageBitmap(bitmap);
+        txtName.setText(currentUser.getName());
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+    }
+
+    private void mapping() {
+        navigationView  = findViewById(R.id.navigationView);
+        toolbar         = findViewById(R.id.toolbar);
+        bottomNav       = findViewById(R.id.bottomNav);
+        drawerLayout    = findViewById(R.id.drawerLayout);
+
+        View hview      = navigationView.getHeaderView(0);
+        imgAvatar       = hview.findViewById(R.id.navigation_avatar);
+        txtName         = hview.findViewById(R.id.navigation_name);
+        txtEmail        = hview.findViewById(R.id.navigation_email);
     }
 
     private NavigationView.OnNavigationItemSelectedListener navListener = new NavigationView.OnNavigationItemSelectedListener() {

@@ -39,7 +39,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
     View view;
     ImageView imgIcon;
     CircleImageView imgAvatar;
-    TextView txtMark, txtName, txtTitle, txtTemp, txtTempMaxMin, txtHumidity, txtStatus, txtWind, txtCloud, txtCity, txtDay;
+    TextView txtScore, txtName, txtTitle, txtTemp, txtTempMaxMin, txtHumidity, txtStatus, txtWind, txtCloud, txtCity, txtDay;
 
 
     @Nullable
@@ -64,8 +64,8 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
         imgAvatar.setImageBitmap(bitmap);
 
         if(cursor.moveToFirst() && cursor.getCount() > 0){
-            int mark = cursor.getInt(1);
-            txtMark.setText("Điểm: " + mark);
+            int score = cursor.getInt(1);
+            txtScore.setText("Điểm: " + score);
         }
 
     }
@@ -146,7 +146,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
         txtTitle    = view.findViewById(R.id.textViewTitle);
         txtCloud    = view.findViewById(R.id.textViewCloud);
         txtDay      = view.findViewById(R.id.textViewDay);
-        txtMark     = view.findViewById(R.id.textViewMark);
+        txtScore    = view.findViewById(R.id.textViewScore);
         imgIcon     = view.findViewById(R.id.imageViewWeatherIcon);
         imgAvatar   = view.findViewById(R.id.circleImageViewAvatar);
     }

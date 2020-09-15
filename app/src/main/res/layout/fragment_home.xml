@@ -46,7 +46,7 @@
 
             <TextView
                 android:textColor="#03C50B"
-                android:id="@+id/textViewMark"
+                android:id="@+id/textViewScore"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"

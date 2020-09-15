@@ -37,7 +37,7 @@
             android:textSize="30dp" />
 
         <ImageButton
-            android:id="@+id/imageButtonChange"
+            android:id="@+id/imageButtonRetry"
             android:layout_weight="1"
             android:padding="10dp"
             android:layout_width="0dp"

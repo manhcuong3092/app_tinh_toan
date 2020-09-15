@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
         bottomNav       = findViewById(R.id.bottomNav);
         drawerLayout    = findViewById(R.id.drawerLayout);
 
-        View hview      = navigationView.getHeaderView(0);
-        imgAvatar       = hview.findViewById(R.id.navigation_avatar);
-        txtName         = hview.findViewById(R.id.navigation_name);
-        txtEmail        = hview.findViewById(R.id.navigation_email);
+        View headerView = navigationView.getHeaderView(0);
+        imgAvatar       = headerView.findViewById(R.id.navigation_avatar);
+        txtName         = headerView.findViewById(R.id.navigation_name);
+        txtEmail        = headerView.findViewById(R.id.navigation_email);
     }
 
     private NavigationView.OnNavigationItemSelectedListener navListener = new NavigationView.OnNavigationItemSelectedListener() {

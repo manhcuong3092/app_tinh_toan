@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,6 +26,7 @@ public class ExerciseActivity extends AppCompatActivity {
     int exactlyAnswerCount;
     ArrayList<Operation> opList;
     Intent intent;
+    OperationAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,70 +36,66 @@ public class ExerciseActivity extends AppCompatActivity {
         mapping();
 
         intent = getIntent();
-        //khoi tao
+        //khoi tao list
         initOperationList();
 
-        recyclerView.setHasFixedSize(true);
+        adapter = new OperationAdapter(opList, this);
+
+        recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        OperationAdapter adapter = new OperationAdapter(opList, this);
-        recyclerView.setAdapter(adapter);
-
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkResultProcess();
+                for (int i = 0; i < opList.size(); i++){
+                    checkResultProcess(i);
+                }
             }
         });
 
     }
 
-    private void checkResultProcess() {
-        for(int i = 0; i < opList.size(); i++){
-            RecyclerView.ViewHolder view = recyclerView.findViewHolderForAdapterPosition(i);
-            EditText edtAnswer = view.itemView.findViewById(R.id.editTextAnswer);
-            ImageView imgResult = view.itemView.findViewById(R.id.imageViewResult);
-            int answer = Integer.parseInt(edtAnswer.getText().toString());
-            int operator = opList.get(i).getOperator();
-            int a = opList.get(i).getA();
-            int b = opList.get(i).getB();
+    private void checkResultProcess(int i) {
+        int answer = Integer.parseInt(opList.get(i).getAnswer());
+        int operator = opList.get(i).getOperator();
+        int a = opList.get(i).getA();
+        int b = opList.get(i).getB();
 
-            switch (operator) {
-                case Operation.ADD:
-                    if (a + b == answer) {
-                        imgResult.setImageResource(R.drawable.correct);
-                    } else {
-                        imgResult.setImageResource(R.drawable.wrong);
-                    }
-                    break;
-                case Operation.SUBTRACT:
-                    if (a - b == answer) {
-                        imgResult.setImageResource(R.drawable.correct);
-                    } else {
-                        imgResult.setImageResource(R.drawable.wrong);
-                    }
-                    break;
-                case Operation.MULTIPLE:
-                    if (a * b == answer) {
-                        imgResult.setImageResource(R.drawable.correct);
-                    } else {
-                        imgResult.setImageResource(R.drawable.wrong);
-                    }
-                    break;
-                case Operation.DIVIDE:
-                    if (a / b == answer) {
-                        imgResult.setImageResource(R.drawable.correct);
-                    } else {
-                        imgResult.setImageResource(R.drawable.wrong);
-                    }
-                    break;
-            }
+        switch (operator) {
+            case Operation.ADD:
+                if (a + b == answer) {
+                    opList.get(i).setStatus(Operation.EXACT);
+                } else {
+                    opList.get(i).setStatus(Operation.WRONG);
+                }
+                break;
+            case Operation.SUBTRACT:
+                if (a - b == answer) {
+                    opList.get(i).setStatus(Operation.EXACT);
+                } else {
+                    opList.get(i).setStatus(Operation.WRONG);
+                }
+                break;
+            case Operation.MULTIPLE:
+                if (a * b == answer) {
+                    opList.get(i).setStatus(Operation.EXACT);
+                } else {
+                    opList.get(i).setStatus(Operation.WRONG);
+                }
+                break;
+            case Operation.DIVIDE:
+                if (a / b == answer) {
+                    opList.get(i).setStatus(Operation.EXACT);
+                } else {
+                    opList.get(i).setStatus(Operation.WRONG);
+                }
+                break;
         }
+        adapter.notifyDataSetChanged();
     }
 
     private void initOperationList() {

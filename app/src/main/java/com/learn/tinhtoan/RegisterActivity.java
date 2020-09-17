@@ -101,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
                         database.addUserData(id);
 
                         Toast.makeText(RegisterActivity.this, "Đăng kí thành công!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     }
                 }
             }

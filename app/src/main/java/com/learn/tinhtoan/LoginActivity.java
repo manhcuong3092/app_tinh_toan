@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         database.queryData("CREATE TABLE IF NOT EXISTS DataUser(IdUser INTEGER PRIMARY KEY, " +
                 "Diem INTEGER NOT NULL, SoCauTraLoi INTEGER NOT NULL, SoCauDung INTEGER NOT NULL," +
                 " SoCauCong INTEGER NOT NULL, SoCauTru INTEGER NOT NULL, SoCauNhan INTEGER NOT NULL," +
-                " SoCauChia INTEGER NOT NULL)");
+                " SoCauChia INTEGER NOT NULL, SoLanTinhToan INTEGER NOT NULL, SoLanMiniGame INTEGER NOT NULL)");
     }
 
 

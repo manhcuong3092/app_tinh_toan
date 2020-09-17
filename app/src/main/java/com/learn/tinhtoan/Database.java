@@ -38,7 +38,7 @@ public class Database extends SQLiteOpenHelper{
 
     public void addUserData(int idUser){
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "INSERT INTO DataUser VALUES(" + idUser + ", 0, 0, 0, 0, 0, 0, 0)";
+        String sql = "INSERT INTO DataUser VALUES(" + idUser + ", 0, 0, 0, 0, 0, 0, 0, 0, 0)";
         database.execSQL(sql);
     }
 
@@ -57,6 +57,11 @@ public class Database extends SQLiteOpenHelper{
     //ham tim username
     public static Cursor findUserData(int id){
         return LoginActivity.database.getData("SELECT * FROM DataUser WHERE IdUser = " + id);
+    }
+
+    public static void updateScore(int idUser, int userScore, int soLanTinhToan){
+        String sql = "UPDATE DataUser SET Diem = " + userScore + ", SoLanTinhToan = " + soLanTinhToan + " WHERE IdUser = " + idUser + ";";
+        database.queryData(sql);
     }
 
     public Database(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {

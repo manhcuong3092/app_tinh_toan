@@ -3,6 +3,7 @@ package com.learn.tinhtoan;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
     public OperationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.row_operation, parent, false);
-        ViewHolder viewHolder =new ViewHolder(itemView);
+        ViewHolder viewHolder = new ViewHolder(itemView);
         return viewHolder;
     }
 
@@ -41,8 +42,8 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
         holder.txtA.setText(opList.get(position).getA() + "");
         holder.txtB.setText(opList.get(position).getB() + "");
 
-        final int operator = opList.get(position).getOperator();
-        switch (operator){
+        int operator = opList.get(position).getOperator();
+        switch (operator) {
             case Operation.ADD:
                 holder.txtOperator.setText("+");
                 break;
@@ -57,8 +58,16 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
                 break;
         }
 
+        if (operator != Operation.DIVIDE) {
+            holder.edtRemainder.setVisibility(View.INVISIBLE);
+            holder.txtRemainder.setVisibility(View.INVISIBLE);
+        } else {
+            holder.edtRemainder.setVisibility(View.VISIBLE);
+            holder.txtRemainder.setVisibility(View.VISIBLE);
+        }
+
         //xet trang thai
-        switch (opList.get(position).getStatus()){
+        switch (opList.get(position).getStatus()) {
             case Operation.UNCHECKED:
                 holder.imgResult.setImageResource(R.mipmap.ic_launcher);
                 break;
@@ -70,8 +79,13 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
                 break;
         }
 
+        Log.d("AAA", opList.get(position).getExactAnswer());
+        holder.txtResultAnswer.setText(opList.get(position).getExactAnswer());
+
         //lấy lại text bị mất khi đã nhập
         holder.edtAnswer.setText(opList.get(position).getAnswer());
+        holder.edtRemainder.setText(opList.get(position).getRemainderAnswer());
+
     }
 
 
@@ -80,10 +94,10 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
         return opList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtA, txtB, txtOperator, txtResult;
-        EditText edtAnswer;
+        TextView txtA, txtB, txtOperator, txtRemainder, txtResultAnswer;
+        EditText edtAnswer, edtRemainder;
         ImageView imgResult;
 
 
@@ -95,7 +109,9 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
             txtOperator = itemView.findViewById(R.id.textViewOperator);
             edtAnswer = itemView.findViewById(R.id.editTextAnswer);
             imgResult = itemView.findViewById(R.id.imageViewResult);
-            txtResult = itemView.findViewById(R.id.textViewResult);
+            txtRemainder = itemView.findViewById(R.id.textViewRemainder);
+            txtResultAnswer = itemView.findViewById(R.id.textViewResultAnswer);
+            edtRemainder = itemView.findViewById(R.id.editTextRemainder);
 
             //Sự kiện để lưu giá trị của edittext khi scroll
             edtAnswer.addTextChangedListener(new TextWatcher() {
@@ -108,6 +124,24 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     String answer = edtAnswer.getText().toString();
                     opList.get(getAbsoluteAdapterPosition()).setAnswer(answer);
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+
+            edtRemainder.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    String remainder = edtRemainder.getText().toString();
+                    opList.get(getAbsoluteAdapterPosition()).setRemainderAnswer(remainder);
                 }
 
                 @Override

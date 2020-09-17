@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_profile:
                     selectedFragment = new ProfileFragment();
                     break;
-                case R.id.nav_chart:
+                case R.id.nav_statistic:
                     selectedFragment = new ChartFragment();
                     break;
                 case R.id.nav_todo:

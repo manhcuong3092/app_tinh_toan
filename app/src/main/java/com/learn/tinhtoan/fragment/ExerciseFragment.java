@@ -2,6 +2,7 @@ package com.learn.tinhtoan.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,21 +56,21 @@ public class ExerciseFragment extends androidx.fragment.app.Fragment {
             }
         });
 
-        btn30Giay.setOnClickListener(new View.OnClickListener() {
+        btn20Giay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 edtSoGiay.setText("20");
             }
         });
 
-        btn45Giay.setOnClickListener(new View.OnClickListener() {
+        btn30Giay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 edtSoGiay.setText("30");
             }
         });
 
-        btn20Giay.setOnClickListener(new View.OnClickListener() {
+        btn45Giay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 edtSoGiay.setText("45");

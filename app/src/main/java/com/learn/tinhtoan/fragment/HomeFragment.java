@@ -1,5 +1,6 @@
 package com.learn.tinhtoan.fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.learn.tinhtoan.Database;
+import com.learn.tinhtoan.ExerciseActivity;
 import com.learn.tinhtoan.MainActivity;
 import com.learn.tinhtoan.R;
 import com.learn.tinhtoan.User;
@@ -38,6 +41,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
     View view;
     ImageView imgIcon;
+    ImageButton ibtnTinhToan, ibtnTriNho;
     CircleImageView imgAvatar;
     TextView txtScore, txtName, txtTitle, txtTemp, txtTempMaxMin, txtHumidity, txtStatus, txtWind, txtCloud, txtCity, txtDay;
 
@@ -50,6 +54,26 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
         getCurrentWeatherData("Hanoi");
         setUserInfor();
+
+        ibtnTinhToan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ExerciseActivity.class);
+
+                intent.putExtra("soCau", 15);
+                intent.putExtra("soGiay", 30);
+                intent.putExtra("phepCong", true);
+                intent.putExtra("phepTru", true);
+                intent.putExtra("phepNhan", true);
+                intent.putExtra("phepChia", true);
+                intent.putExtra("easy", true);
+                intent.putExtra("normal", false);
+                intent.putExtra("hard", false);
+
+                startActivity(intent);
+
+            }
+        });
 
         return view;
     }
@@ -149,5 +173,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
         txtScore    = view.findViewById(R.id.textViewScore);
         imgIcon     = view.findViewById(R.id.imageViewWeatherIcon);
         imgAvatar   = view.findViewById(R.id.circleImageViewAvatar);
+        ibtnTriNho  = view.findViewById(R.id.imageButtonTriNho);
+        ibtnTinhToan = view.findViewById(R.id.imageButtonTinhToan);
     }
 }

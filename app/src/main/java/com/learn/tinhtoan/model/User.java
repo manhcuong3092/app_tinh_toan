@@ -1,4 +1,4 @@
-package com.learn.tinhtoan;
+package com.learn.tinhtoan.model;
 
 import java.io.Serializable;
 

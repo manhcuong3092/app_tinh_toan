@@ -6,10 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import static com.learn.tinhtoan.LoginActivity.database;
+import com.learn.tinhtoan.activity.LoginActivity;
+import com.learn.tinhtoan.model.DataUser;
+import com.learn.tinhtoan.model.UserAchievement;
+
+import static com.learn.tinhtoan.activity.LoginActivity.database;
 
 public class Database extends SQLiteOpenHelper{
 
@@ -36,9 +41,15 @@ public class Database extends SQLiteOpenHelper{
         statement.executeInsert();
     }
 
-    public void addUserData(int idUser){
+    public void addUserData(int UserId){
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "INSERT INTO DataUser VALUES(" + idUser + ", 0, 0, 0, 0, 0, 0, 0, 0, 0)";
+        String sql = "INSERT INTO UserData VALUES(" + UserId + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)";
+        database.execSQL(sql);
+    }
+
+    public void addUserAchievement(int UserId){
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "INSERT INTO UserAchievement VALUES(" + UserId + ", 1, \"Tập sự\", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)";
         database.execSQL(sql);
     }
 
@@ -48,19 +59,43 @@ public class Database extends SQLiteOpenHelper{
     }
 
     //ham tim id cua username
-    public static int findIdUser(String name) {
+    public static int findUserId(String name) {
         Cursor cursor = LoginActivity.database.getData("SELECT * FROM User WHERE Username = '" + name + "'");
         cursor.moveToFirst();
         return cursor.getInt(0);
     }
 
-    //ham tim username
+    //ham tim data user
     public static Cursor findUserData(int id){
-        return LoginActivity.database.getData("SELECT * FROM DataUser WHERE IdUser = " + id);
+        return LoginActivity.database.getData("SELECT * FROM UserData WHERE UserId = " + id);
     }
 
-    public static void updateScore(int idUser, int userScore, int soLanTinhToan){
-        String sql = "UPDATE DataUser SET Diem = " + userScore + ", SoLanTinhToan = " + soLanTinhToan + " WHERE IdUser = " + idUser + ";";
+    //ham tim data user
+    public static Cursor findUserAchievement(int id){
+        return LoginActivity.database.getData("SELECT * FROM UserAchievement WHERE UserId = " + id);
+    }
+
+    public static void updateUserData(DataUser dataUser){
+        String sql = "UPDATE UserData SET Diem = " + dataUser.getDiem() + ", SoLanTinhToan = " + dataUser.getSoLanTinhToan() +
+                ", SoCauTraLoi = " + dataUser.getSoCauTraLoi() + ", SoCauDung = " + dataUser.getSoCauDung() +
+                ", SoCauCong = " + dataUser.getSoCauCong() + ", SoCauTru = " + dataUser.getSoCauTru() +
+                ", SoCauNhan = " + dataUser.getSoCauNhan() + ", SoCauChia = " + dataUser.getSoCauChia() +
+                ", SoCauDe = " + dataUser.getSoCauDe() + ", SoCauKho = " + dataUser.getSoCauKho() +
+                ", SoCauTB = " + dataUser.getSoCauTB() +
+                " WHERE UserId = " + dataUser.getUserId() + ";";
+        database.queryData(sql);
+    }
+
+    public static void updateUserAchievement(UserAchievement userAchievement) {
+        String sql = "UPDATE UserAchievement SET level = " + userAchievement.getLevel() +
+                ", title = \"" + userAchievement.getTitle() + "\", dung_het = " + userAchievement.getDungHet() +
+                ", sai_het = " + userAchievement.getSaiHet() + ", am_diem = " + userAchievement.getAmDiem() +
+                ", clear_hard = " + userAchievement.getClearHard() + ", clear_operators = " + userAchievement.getClearOperators() +
+                ", clear_add = " + userAchievement.getClearAdd() + ", clear_sub = " + userAchievement.getClearSub() +
+                ", clear_mul = " + userAchievement.getClearMul() + ", clear_div = " + userAchievement.getClearDiv() +
+                ", under_15_seconds = " + userAchievement.getUnder15Seconds() +
+                ", clear_minigames = " + userAchievement.getClearMinigames() +
+                " WHERE UserId = " + userAchievement.getUserId() + ";";
         database.queryData(sql);
     }
 

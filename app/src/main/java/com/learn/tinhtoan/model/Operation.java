@@ -1,4 +1,4 @@
-package com.learn.tinhtoan;
+package com.learn.tinhtoan.model;
 
 public class Operation {
     public static final int ADD = 0;

@@ -1,19 +1,20 @@
-package com.learn.tinhtoan;
+package com.learn.tinhtoan.adapter;
 
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.learn.tinhtoan.model.Operation;
+import com.learn.tinhtoan.R;
 
 import java.util.ArrayList;
 
@@ -79,7 +80,7 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
                 break;
         }
 
-        Log.d("AAA", opList.get(position).getExactAnswer());
+//        Log.d("AAA", opList.get(position).getExactAnswer());
         holder.txtResultAnswer.setText(opList.get(position).getExactAnswer());
 
         //lấy lại text bị mất khi đã nhập

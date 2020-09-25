@@ -2,7 +2,6 @@ package com.learn.tinhtoan.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.learn.tinhtoan.ExerciseActivity;
+import com.learn.tinhtoan.activity.ExerciseActivity;
 import com.learn.tinhtoan.R;
 
 public class ExerciseFragment extends androidx.fragment.app.Fragment {

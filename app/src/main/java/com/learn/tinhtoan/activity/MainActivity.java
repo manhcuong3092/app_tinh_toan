@@ -1,4 +1,4 @@
-package com.learn.tinhtoan;
+package com.learn.tinhtoan.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -20,6 +20,10 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.learn.tinhtoan.model.DataUser;
+import com.learn.tinhtoan.R;
+import com.learn.tinhtoan.model.User;
+import com.learn.tinhtoan.model.UserAchievement;
 import com.learn.tinhtoan.fragment.AchievementFragment;
 import com.learn.tinhtoan.fragment.ChangePasswordFragment;
 import com.learn.tinhtoan.fragment.ChartFragment;
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView imgAvatar;
     TextView txtName, txtEmail;
     public static User currentUser;
+    public static DataUser currentDataUser;
+    public static UserAchievement currentUserAchievement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         currentUser = (User) intent.getSerializableExtra("user");
+        currentDataUser = (DataUser) intent.getSerializableExtra("userData");
+        currentUserAchievement = (UserAchievement) intent.getSerializableExtra("userAchievement");
 
         //bottom navbar
         bottomNav.setOnNavigationItemSelectedListener(bottomNavListener);

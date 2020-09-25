@@ -29,83 +29,87 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_weight="7"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_weight="7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/textViewOperantA"
-                    android:textColor="#000"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp"
-                    android:textSize="30dp"
-                    android:text="a"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/textViewOperantA"
+                        android:textColor="#000"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="5dp"
+                        android:textSize="30dp"
+                        android:text="a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-                <TextView
-                    android:id="@+id/textViewOperator"
-                    android:textColor="#000"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:textSize="30dp"
-                    android:text="+"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/textViewOperator"
+                        android:textColor="#000"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:textSize="30dp"
+                        android:text="+"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-                <TextView
-                    android:id="@+id/textViewOperantB"
-                    android:textColor="#000"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:textSize="30dp"
-                    android:text="b"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/textViewOperantB"
+                        android:textColor="#000"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:textSize="30dp"
+                        android:text="b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-                <TextView
-                    android:textColor="#000"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:textSize="30dp"
-                    android:text="="
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:textSize="30dp"
+                        android:text="="
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-                <EditText
-                    android:inputType="number"
-                    android:id="@+id/editTextAnswer"
-                    android:textColor="#000"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:textSize="30dp"
-                    android:gravity="center"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"/>
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/editTextAnswer"
+                        android:textColor="#000"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:textSize="30dp"
+                        android:gravity="center"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"/>
 
-                <TextView
-                    android:text="Dư"
-                    android:id="@+id/textViewRemainder"
-                    android:textColor="#81028A"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="3dp"
-                    android:textSize="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <TextView
+                        android:text="Dư"
+                        android:id="@+id/textViewRemainder"
+                        android:textColor="#81028A"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:textSize="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-                <EditText
-                    android:inputType="number"
-                    android:id="@+id/editTextRemainder"
-                    android:textColor="#700000"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:textSize="30sp"
-                    android:gravity="center"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"/>
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/editTextRemainder"
+                        android:textColor="#700000"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"/>
 
-            </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"

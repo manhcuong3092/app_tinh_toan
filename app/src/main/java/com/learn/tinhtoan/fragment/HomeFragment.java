@@ -22,10 +22,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.learn.tinhtoan.Database;
-import com.learn.tinhtoan.ExerciseActivity;
-import com.learn.tinhtoan.MainActivity;
+import com.learn.tinhtoan.activity.ExerciseActivity;
+import com.learn.tinhtoan.activity.MainActivity;
 import com.learn.tinhtoan.R;
-import com.learn.tinhtoan.User;
+import com.learn.tinhtoan.model.User;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;

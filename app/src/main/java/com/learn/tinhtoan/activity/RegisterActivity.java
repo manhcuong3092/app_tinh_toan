@@ -1,4 +1,4 @@
-package com.learn.tinhtoan;
+package com.learn.tinhtoan.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,11 +23,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.learn.tinhtoan.Database;
+import com.learn.tinhtoan.R;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import static com.learn.tinhtoan.LoginActivity.database;
+import static com.learn.tinhtoan.activity.LoginActivity.database;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -95,10 +98,10 @@ public class RegisterActivity extends AppCompatActivity {
                     } else {
                         //add user
                         database.addUser(name, password, hinhAnh);
-
-                        int id = Database.findIdUser(name);
+                        int id = Database.findUserId(name);
 
                         database.addUserData(id);
+                        database.addUserAchievement(id);
 
                         Toast.makeText(RegisterActivity.this, "Đăng kí thành công!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));

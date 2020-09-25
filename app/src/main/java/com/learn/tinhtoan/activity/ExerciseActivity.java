@@ -1,4 +1,4 @@
-package com.learn.tinhtoan;
+package com.learn.tinhtoan.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -17,6 +16,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.learn.tinhtoan.Database;
+import com.learn.tinhtoan.model.Achievement;
+import com.learn.tinhtoan.model.DataUser;
+import com.learn.tinhtoan.model.Operation;
+import com.learn.tinhtoan.adapter.OperationAdapter;
+import com.learn.tinhtoan.R;
+import com.learn.tinhtoan.model.User;
+import com.learn.tinhtoan.model.UserAchievement;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,12 +38,18 @@ public class ExerciseActivity extends AppCompatActivity {
     Button btnSubmit;
     RecyclerView recyclerView;
     int score, doKho, soGiay, exactAnswerCount;
+    int soPhepCong, soPhepTru, soPhepNhan, soPhepChia;
     long timeConLai;
     CountDownTimer countDownTimer;
     ArrayList<Operation> opList;
     Intent intent;
     OperationAdapter adapter;
+
+    //gán tham chiếu đến cùng địa chỉ ô nhớ
     User user = MainActivity.currentUser;
+    DataUser dataUser = MainActivity.currentDataUser;
+    UserAchievement userAchievement = MainActivity.currentUserAchievement;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +81,7 @@ public class ExerciseActivity extends AppCompatActivity {
                     checkResultProcess(i);
                 }
                 cancelCountDownTimer();
-                resultHandle(exactAnswerCount);
+                resultHandle();
             }
         });
 
@@ -111,7 +125,7 @@ public class ExerciseActivity extends AppCompatActivity {
                 for (int i = 0; i < opList.size(); i++) {
                     checkResultProcess(i);
                 }
-                resultHandle(score);
+                resultHandle();
             }
         };
         countDownTimer.start();
@@ -142,7 +156,7 @@ public class ExerciseActivity extends AppCompatActivity {
             r = Integer.parseInt(opList.get(i).getRemainderAnswer());
         }
 
-        //kiểm tra dấu
+        //kiểm tra dấu và tính điểm
         switch (operator) {
             case Operation.ADD:
                 opList.get(i).setExactAnswer("Đáp án: " + (a + b));
@@ -191,22 +205,141 @@ public class ExerciseActivity extends AppCompatActivity {
     }
 
     //xủe lý kết quả
-    private void resultHandle(int exactAnswerCount) {
-        Cursor cursor = Database.findUserData(user.getId());
-        int userScore = 0, soLanTinhToan = 0;
-        if (cursor.moveToFirst() && cursor.getCount() > 0) {
-            userScore = cursor.getInt(1);
-            soLanTinhToan = cursor.getInt(9);
-        }
+    private void resultHandle() {
+        int userScore = dataUser.getDiem();
         //diem = socaudung*heso - socausai*5
         score = score - (opList.size() - exactAnswerCount) * 5;
-
         //update userscore
         userScore += score;
-        Database.updateScore(user.getId(), userScore, soLanTinhToan);
+
+        //update userData and userAchievement
+        updateUserData();
+        updateUserAchievement();
 
         showDiaglogResult(exactAnswerCount, score, userScore);
         btnSubmit.setEnabled(false);
+    }
+
+
+    private void updateUserData() {
+        //update userData
+        dataUser.setDiem(dataUser.getDiem() + score);
+        dataUser.setSoCauCong(dataUser.getSoCauCong() + soPhepCong);
+        dataUser.setSoCauTru(dataUser.getSoCauTru() + soPhepTru);
+        dataUser.setSoCauNhan(dataUser.getSoCauNhan() + soPhepNhan);
+        dataUser.setSoCauChia(dataUser.getSoCauChia() + soPhepChia);
+        if(doKho == Operation.EASY)
+            dataUser.setSoCauDe(dataUser.getSoCauDe() + opList.size());
+        else if (doKho == Operation.NORMAL)
+            dataUser.setSoCauDe(dataUser.getSoCauTB() + opList.size());
+        else
+            dataUser.setSoCauKho(dataUser.getSoCauKho() + opList.size());
+        dataUser.setSoCauTraLoi(dataUser.getSoCauTraLoi() + opList.size());
+        dataUser.setSoCauDung(dataUser.getSoCauDung() + exactAnswerCount);
+        dataUser.setSoLanTinhToan(dataUser.getSoLanTinhToan() + 1);
+        Database.updateUserData(dataUser);
+    }
+
+    private void updateUserAchievement() {
+        //-------------------------------------
+        //update userAchievement
+        //kiem tra diem, set level
+        int achievementScore = dataUser.getDiem();
+        if(achievementScore < 0){
+            userAchievement.setAmDiem(Achievement.BRONZE_TROPHY);
+        }
+        if(achievementScore >= 6700){
+            userAchievement.setLevel(5);
+            userAchievement.setTitle("VIP Pro");
+        } else if (achievementScore >= 1700){
+            userAchievement.setLevel(4);
+            userAchievement.setTitle("Cao thủ");
+        } else if (achievementScore >= 500){
+            userAchievement.setLevel(3);
+            userAchievement.setTitle("Chuyên nghiệp");
+        } else if (achievementScore >= 100){
+            userAchievement.setLevel(2);
+            userAchievement.setTitle("Nghiệp dư");
+        } else if (achievementScore >= 0){
+            userAchievement.setLevel(1);
+            userAchievement.setTitle("Tập sự");
+        } else {
+            userAchievement.setLevel(0);
+            userAchievement.setTitle("Gà");
+        }
+        //sai het
+        if (exactAnswerCount == 0){
+            userAchievement.setSaiHet(Achievement.BRONZE_TROPHY);
+        }
+        //dung het
+        if(exactAnswerCount == opList.size()){
+            userAchievement.setDungHet(Achievement.BRONZE_TROPHY);
+        }
+        //muc do kho
+        if (dataUser.getSoCauKho() >= 30){
+            userAchievement.setClearHard(Achievement.GOLD_TROPHY);
+        } else if (dataUser.getSoCauKho() >= 20){
+            userAchievement.setClearHard(Achievement.SILVER_TROPHY);
+        } else if (dataUser.getSoCauKho() >= 10){
+            userAchievement.setClearHard(Achievement.BRONZE_TROPHY);
+        }
+        //so cau lam dung
+        if(dataUser.getSoCauDung() >= 150){
+            userAchievement.setClearOperators(Achievement.GOLD_TROPHY);
+        } else if (dataUser.getSoCauDung() >= 75){
+            userAchievement.setClearOperators(Achievement.SILVER_TROPHY);
+        } else if (dataUser.getSoCauDung() >= 20){
+            userAchievement.setClearOperators(Achievement.BRONZE_TROPHY);
+        }
+        //so phep tinh cộng
+        if(dataUser.getSoCauCong() >= 100){
+            userAchievement.setClearAdd(Achievement.GOLD_TROPHY);
+        } else if(dataUser.getSoCauCong() >= 50){
+            userAchievement.setClearAdd(Achievement.SILVER_TROPHY);
+        } else if(dataUser.getSoCauCong() >= 15){
+            userAchievement.setClearAdd(Achievement.BRONZE_TROPHY);
+        }
+        //so phep tinh trừ
+        if(dataUser.getSoCauTru() >= 100){
+            userAchievement.setClearSub(Achievement.GOLD_TROPHY);
+        } else if(dataUser.getSoCauTru() >= 50){
+            userAchievement.setClearSub(Achievement.SILVER_TROPHY);
+        } else if(dataUser.getSoCauTru() >= 15){
+            userAchievement.setClearSub(Achievement.BRONZE_TROPHY);
+        }
+        //so phep tinh nhân
+        if(dataUser.getSoCauNhan() >= 100){
+            userAchievement.setClearMul(Achievement.GOLD_TROPHY);
+        } else if(dataUser.getSoCauNhan() >= 50){
+            userAchievement.setClearMul(Achievement.SILVER_TROPHY);
+        } else if(dataUser.getSoCauNhan() >= 15){
+            userAchievement.setClearMul(Achievement.BRONZE_TROPHY);
+        }
+        //so phep tinh chia
+        if(dataUser.getSoCauChia() >= 100){
+            userAchievement.setClearDiv(Achievement.GOLD_TROPHY);
+        } else if(dataUser.getSoCauChia() >= 50){
+            userAchievement.setClearDiv(Achievement.SILVER_TROPHY);
+        } else if(dataUser.getSoCauChia() >= 15){
+            userAchievement.setClearDiv(Achievement.BRONZE_TROPHY);
+        }
+        //tính thời gian nhanh
+        if((soGiay*opList.size()*1000 - timeConLai)/opList.size() <= 5000 && opList.size() == exactAnswerCount
+            && opList.size() >= 10){
+            //dưới 5 giây và ít nhất 10 câu
+            userAchievement.setUnder15Seconds(Achievement.GOLD_TROPHY);
+        } else if ((soGiay*opList.size()*1000 - timeConLai) <= 10000 && opList.size() == exactAnswerCount
+                && opList.size() >= 10){
+            if(userAchievement.getUnder15Seconds()/opList.size() < Achievement.GOLD_TROPHY){
+                userAchievement.setUnder15Seconds(Achievement.SILVER_TROPHY);
+            }
+        } else if ((soGiay*opList.size()*1000 - timeConLai) <= 15000 && opList.size() == exactAnswerCount
+                && opList.size() >= 10){
+            if(userAchievement.getUnder15Seconds()/opList.size() < Achievement.SILVER_TROPHY){
+                userAchievement.setUnder15Seconds(Achievement.BRONZE_TROPHY);
+            }
+        }
+        Database.updateUserAchievement(userAchievement);
     }
 
     //hiện dialog kết quả
@@ -248,6 +381,7 @@ public class ExerciseActivity extends AppCompatActivity {
         dialog.show();
     }
 
+
     //khởi tạo các biểu thức
     private void initOperationList() {
         opList = new ArrayList<>();
@@ -275,6 +409,11 @@ public class ExerciseActivity extends AppCompatActivity {
             max = 20000;
         }
 
+        //dem so luong phep tinh
+        soPhepCong = 0;
+        soPhepTru = 0;
+        soPhepNhan = 0;
+        soPhepChia = 0;
 
         Random random = new Random();
         int operator, a, b;
@@ -289,6 +428,7 @@ public class ExerciseActivity extends AppCompatActivity {
                         a = random.nextInt(max) + 1;
                         b = random.nextInt(max) + 1;
                         opList.add(new Operation(a, b, operator));
+                        soPhepCong++;
                         i++;
                     }
                     break;
@@ -297,6 +437,7 @@ public class ExerciseActivity extends AppCompatActivity {
                         a = random.nextInt(max) + 1;
                         b = random.nextInt(max) + 1;
                         opList.add(new Operation(a, b, operator));
+                        soPhepTru++;
                         i++;
                     }
                     break;
@@ -305,15 +446,16 @@ public class ExerciseActivity extends AppCompatActivity {
                         a = random.nextInt(max) + 1;
                         b = random.nextInt(max) + 1;
                         opList.add(new Operation(a, b, operator));
+                        soPhepNhan++;
                         i++;
                     }
                     break;
                 case Operation.DIVIDE:
                     if (phepChia) {
                         a = random.nextInt(max) + 1;
-                        ;
                         b = Math.round((random.nextInt(max) + 1) / 10) + 1;
                         opList.add(new Operation(a, b, operator));
+                        soPhepChia++;
                         i++;
                     }
                     break;

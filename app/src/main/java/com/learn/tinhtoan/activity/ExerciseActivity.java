@@ -145,7 +145,9 @@ public class ExerciseActivity extends AppCompatActivity {
     private void checkResultProcess(int i) {
         String answerString = opList.get(i).getAnswer();
         if (answerString.equals("")) {
-            answerString = "-982183841";    //null
+            opList.get(i).setStatus(Operation.WRONG);
+            adapter.notifyDataSetChanged();
+            return;
         }
         int answer = Integer.parseInt(answerString);
         int operator = opList.get(i).getOperator();
@@ -199,8 +201,6 @@ public class ExerciseActivity extends AppCompatActivity {
                 }
                 break;
         }
-
-        Log.d("AAAb", opList.get(i).getExactAnswer() + " dasdas ");
         adapter.notifyDataSetChanged();
     }
 

@@ -7,6 +7,11 @@ public class Achievement {
     public static final int SILVER_TROPHY = 2;
     public static final int GOLD_TROPHY = 3;
 
+    public static final int lv1Tolv2 = 100;
+    public static final int lv2Tolv3 = 200;
+    public static final int lv3Tolv4 = 300;
+    public static final int lv4Tolv5 = 400;
+
     private String title;
     private String current;
     private int trophy;

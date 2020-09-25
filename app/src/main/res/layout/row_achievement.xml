@@ -30,15 +30,17 @@
 
             <TextView
                 android:id="@+id/textViewTrophyTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
                 android:layout_marginTop="16dp"
                 android:text="Title"
                 android:textColor="#ED3737"
                 android:textSize="20dp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imageViewTrophy"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,8 +48,8 @@
                 android:id="@+id/textViewTrophyCurrentProgress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
                 android:layout_marginTop="12dp"
                 android:text="Current"
                 android:textColor="#000"

@@ -26,7 +26,7 @@ import com.learn.tinhtoan.model.User;
 import com.learn.tinhtoan.model.UserAchievement;
 import com.learn.tinhtoan.fragment.AchievementFragment;
 import com.learn.tinhtoan.fragment.ChangePasswordFragment;
-import com.learn.tinhtoan.fragment.ChartFragment;
+import com.learn.tinhtoan.fragment.StatisticFragment;
 import com.learn.tinhtoan.fragment.ExerciseFragment;
 import com.learn.tinhtoan.fragment.HomeFragment;
 import com.learn.tinhtoan.fragment.NotificationFragment;
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new ProfileFragment();
                     break;
                 case R.id.nav_statistic:
-                    selectedFragment = new ChartFragment();
+                    selectedFragment = new StatisticFragment();
                     break;
                 case R.id.nav_todo:
                     selectedFragment = new TodoFragment();

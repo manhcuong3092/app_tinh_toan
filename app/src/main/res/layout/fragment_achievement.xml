@@ -61,7 +61,7 @@
             android:layout_marginTop="16dp"
             android:text="Tập sự"
             android:textColor="#008EFF"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/textViewLevelAchevement"
             app:layout_constraintTop_toTopOf="parent" />
 

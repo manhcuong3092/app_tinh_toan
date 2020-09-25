@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TextView
+            android:id="@+id/textViewTongSoLuot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="55dp"
+            android:text="Tổng số lượt tính: "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textViewTongMinigame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewTongSoLuot"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="15dp"
+            android:text="Tổng số lượt chơi minigame: "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textViewTongSoPhepTinh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewTongMinigame"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="55dp"
+            android:text="Tổng số phép tính: "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textViewSoCauDung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewTongSoPhepTinh"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="10dp"
+            android:text="Số phép tính đúng: "
+            android:textSize="20sp" />
+
+        <ProgressBar
+            android:id="@+id/progressBarRatio"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="157dp"
+            android:layout_marginEnd="20dp"
+            android:progressDrawable="@drawable/circle_progress"
+            android:progress="50"
+            android:indeterminateOnly="false"/>
+
+        <TextView
+            android:id="@+id/textViewRatio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/progressBarRatio"
+            android:layout_alignTop="@+id/progressBarRatio"
+            android:layout_alignEnd="@+id/progressBarRatio"
+            android:layout_alignBottom="@+id/progressBarRatio"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
+            android:text="50%"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewTiLe"
+            android:layout_width="71dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/progressBarRatio"
+            android:layout_alignStart="@+id/progressBarRatio"
+            android:layout_alignEnd="@+id/progressBarRatio"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="15dp"
+            android:gravity="center"
+            android:text="Tỉ lệ đúng" />
+
+        <com.anychart.AnyChartView
+            android:id="@+id/anyChartViewType"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_below="@+id/textViewSoCauDung"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="55dp" />
+
+        <com.anychart.AnyChartView
+            android:id="@+id/anyChartViewDifficult"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_below="@+id/anyChartViewType"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="55dp" />
+    </RelativeLayout>
+</ScrollView>

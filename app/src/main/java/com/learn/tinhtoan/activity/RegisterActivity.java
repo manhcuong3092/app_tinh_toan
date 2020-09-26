@@ -52,24 +52,16 @@ public class RegisterActivity extends AppCompatActivity {
         ibtnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //yeu cau quyen
-                ActivityCompat.requestPermissions(
-                        RegisterActivity.this,
-                        new String[]{Manifest.permission.CAMERA},
-                        REQUEST_CODE_CAMERA
-                );
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, REQUEST_CODE_CAMERA);
             }
         });
 
         ibtnFolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //yeu cau quyen
-                ActivityCompat.requestPermissions(
-                        RegisterActivity.this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        REQUEST_CODE_FOLDER
-                );
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, REQUEST_CODE_FOLDER);
             }
         });
 
@@ -102,6 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         database.addUserData(id);
                         database.addUserAchievement(id);
+                        database.addUserProfile(id);
 
                         Toast.makeText(RegisterActivity.this, "Đăng kí thành công!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));

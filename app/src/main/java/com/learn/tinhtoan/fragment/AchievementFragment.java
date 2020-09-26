@@ -3,6 +3,7 @@ package com.learn.tinhtoan.fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,28 +100,28 @@ public class AchievementFragment extends androidx.fragment.app.Fragment {
                 txtExp.setText(score + "/0");
                 break;
             case 1:
-                pbExp.setProgress(score);
                 pbExp.setMax(lv1);
+                pbExp.setProgress(score);
                 txtExp.setText(pbExp.getProgress() + "/" + pbExp.getMax());
                 break;
             case 2:
+                pbExp.setMax(lv2);
                 pbExp.setProgress(score - lv1);
-                pbExp.setMax(lv2 - lv1);
                 txtExp.setText(pbExp.getProgress() + "/" + pbExp.getMax());
                 break;
             case 3:
-                pbExp.setProgress(score - lv1 - lv2);
-                pbExp.setMax(lv3 - lv2 -lv1);
+                pbExp.setMax(lv3);
+                pbExp.setProgress(score - (lv1 + lv2));
                 txtExp.setText(pbExp.getProgress() + "/" + pbExp.getMax());
                 break;
             case 4:
-                pbExp.setProgress(score - lv1 - lv2- lv3);
-                pbExp.setMax(lv4 - lv3 - lv2 -lv1);
+                pbExp.setMax(lv4);
+                pbExp.setProgress(score - (lv1 + lv2 + lv3));
                 txtExp.setText(pbExp.getProgress() + "/" + pbExp.getMax());
                 break;
             case 5:
-                pbExp.setProgress(score - lv1 - lv2- lv3 - lv4);
-                pbExp.setMax(score - lv1 - lv2- lv3 - lv4);
+                pbExp.setMax(1);
+                pbExp.setProgress(1);
                 txtExp.setText(pbExp.getProgress() + "/" + "∞");
                 break;
         }

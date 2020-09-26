@@ -53,7 +53,11 @@ public class StatisticFragment extends Fragment {
         txtSoLuotMinigame.setText("Tổng số lượt chơi minigame: " + dataUser.getSoLanMiniGame());
         txtSoCauDung.setText("Số phép tính đúng: " + dataUser.getSoCauDung());
 
-        int ratio = dataUser.getSoCauDung()*100 / dataUser.getSoCauTraLoi();
+        int ratio = 0;
+        //chua tra loi thi ti le = 0
+        if(dataUser.getSoCauTraLoi() > 0){
+            ratio = dataUser.getSoCauDung()*100 / dataUser.getSoCauTraLoi();
+        }
         txtRatio.setText(ratio + "%");
         pbRatio.setProgress(ratio);
     }

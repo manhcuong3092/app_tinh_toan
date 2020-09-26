@@ -1,6 +1,7 @@
 package com.learn.tinhtoan;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,7 +13,9 @@ import androidx.annotation.Nullable;
 
 import com.learn.tinhtoan.activity.LoginActivity;
 import com.learn.tinhtoan.model.DataUser;
+import com.learn.tinhtoan.model.User;
 import com.learn.tinhtoan.model.UserAchievement;
+import com.learn.tinhtoan.model.UserProfile;
 
 import static com.learn.tinhtoan.activity.LoginActivity.database;
 
@@ -53,6 +56,12 @@ public class Database extends SQLiteOpenHelper{
         database.execSQL(sql);
     }
 
+    public void addUserProfile(int UserId){
+        SQLiteDatabase database = getWritableDatabase();
+        String sql = "INSERT INTO UserProfile(UserId, gender) VALUES(" + UserId + ", 0)";
+        database.execSQL(sql);
+    }
+
     //ham tim username
     public static Cursor findUserName(String username){
         return LoginActivity.database.getData("SELECT * FROM User WHERE Username = '" + username + "'");
@@ -70,11 +79,30 @@ public class Database extends SQLiteOpenHelper{
         return LoginActivity.database.getData("SELECT * FROM UserData WHERE UserId = " + id);
     }
 
-    //ham tim data user
+    //ham tim user achievement
     public static Cursor findUserAchievement(int id){
         return LoginActivity.database.getData("SELECT * FROM UserAchievement WHERE UserId = " + id);
     }
 
+    //ham tim user profile
+    public static Cursor findUserProfile(int id){
+        return LoginActivity.database.getData("SELECT * FROM UserProfile WHERE UserId = " + id);
+    }
+
+    //update user
+    public void updateUser(User user) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cvImage = new ContentValues();
+        ContentValues cvPassword = new ContentValues();
+        cvImage.put("Image", user.getImage());
+        cvPassword.put("Password",user.getPassword());
+//        String sql = "UPDATE User SET Password = \""  + user.getPassword() + "\"" + " WHERE UserId = " + user.getId() + ";";
+//        db.execSQL(sql);
+        db.update("User", cvPassword, "Id = " + user.getId(), null);
+        db.update("User", cvImage, "Id = " + user.getId(), null);
+    }
+
+    //update data
     public static void updateUserData(DataUser dataUser){
         String sql = "UPDATE UserData SET Diem = " + dataUser.getDiem() + ", SoLanTinhToan = " + dataUser.getSoLanTinhToan() +
                 ", SoCauTraLoi = " + dataUser.getSoCauTraLoi() + ", SoCauDung = " + dataUser.getSoCauDung() +
@@ -83,6 +111,16 @@ public class Database extends SQLiteOpenHelper{
                 ", SoCauDe = " + dataUser.getSoCauDe() + ", SoCauKho = " + dataUser.getSoCauKho() +
                 ", SoCauTB = " + dataUser.getSoCauTB() +
                 " WHERE UserId = " + dataUser.getUserId() + ";";
+        database.queryData(sql);
+    }
+
+    //update profile
+    public static void updateUserProfile(UserProfile userProfile){
+        String sql = "UPDATE UserProfile SET fullname = \"" + userProfile.getFullname() + "\"" +
+                ", date_of_birth = " + "\"" + userProfile.getDateOfBirth() + "\"" +
+                ", gender = " + userProfile.getGender() + ", email = \""  + userProfile.getEmail() + "\"" +
+                ", address = \"" + userProfile.getAddress() + "\"" + ", phone = \"" + userProfile.getPhone() + "\"" +
+                " WHERE UserId = " + userProfile.getUserId() + ";";
         database.queryData(sql);
     }
 

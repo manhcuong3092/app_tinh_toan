@@ -245,19 +245,23 @@ public class ExerciseActivity extends AppCompatActivity {
         //update userAchievement
         //kiem tra diem, set level
         int achievementScore = dataUser.getDiem();
+        int lv1 = Achievement.lv1Tolv2;
+        int lv2 = Achievement.lv2Tolv3;
+        int lv3 = Achievement.lv3Tolv4;
+        int lv4 = Achievement.lv4Tolv5;
         if(achievementScore < 0){
             userAchievement.setAmDiem(Achievement.BRONZE_TROPHY);
         }
-        if(achievementScore >= 6700){
+        if(achievementScore >= lv1 + lv2 + lv3 + lv4){
             userAchievement.setLevel(5);
             userAchievement.setTitle("VIP Pro");
-        } else if (achievementScore >= 1700){
+        } else if (achievementScore >= lv1 + lv2 + lv3 ){
             userAchievement.setLevel(4);
             userAchievement.setTitle("Cao thủ");
-        } else if (achievementScore >= 500){
+        } else if (achievementScore >= lv1 + lv2){
             userAchievement.setLevel(3);
             userAchievement.setTitle("Chuyên nghiệp");
-        } else if (achievementScore >= 100){
+        } else if (achievementScore >= lv1){
             userAchievement.setLevel(2);
             userAchievement.setTitle("Nghiệp dư");
         } else if (achievementScore >= 0){

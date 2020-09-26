@@ -15,6 +15,7 @@ import com.learn.tinhtoan.Database;
 import com.learn.tinhtoan.R;
 import com.learn.tinhtoan.model.User;
 import com.learn.tinhtoan.model.UserAchievement;
+import com.learn.tinhtoan.model.UserProfile;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,10 +54,14 @@ public class LoginActivity extends AppCompatActivity {
 
                             DataUser userData = createDataUser(user);
                             UserAchievement userAchievement = createUserAchievement(user);
+                            UserProfile userProfile = createUserProfile(user);
                             
                             intent.putExtra("user", user);
                             intent.putExtra("userData", userData);
                             intent.putExtra("userAchievement", userAchievement);
+                            intent.putExtra("userProfile", userProfile);
+
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         } else {
                             Toast.makeText(LoginActivity.this, "Sai tài khoản hoặc mật khẩu.", Toast.LENGTH_SHORT).show();
@@ -76,6 +81,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private UserProfile createUserProfile(User user) {
+        Cursor cursor3 = Database.findUserProfile(user.getId());
+        cursor3.moveToFirst();
+        UserProfile userProfile = new UserProfile(
+                cursor3.getInt(0),
+                cursor3.getString(1),
+                cursor3.getString(2),
+                cursor3.getString(4),
+                cursor3.getInt(3),
+                cursor3.getString(5),
+                cursor3.getString(6)
+        );
+        return userProfile;
     }
 
     private UserAchievement createUserAchievement(User user) {
@@ -137,6 +157,10 @@ public class LoginActivity extends AppCompatActivity {
                 " sai_het INTEGER NOT NULL, am_diem INTEGER NOT NULL, clear_hard INTEGER NOT NULL, clear_operators INTEGER NOT NULL," +
                 " under_15_seconds INTEGER NOT NULL, clear_add INTEGER NOT NULL, clear_sub INTEGER NOT NULL," +
                 " clear_mul INTEGER NOT NULL, clear_div INTEGER NOT NULL, clear_minigames INTEGER NOT NULL)");
+
+        database.queryData("CREATE TABLE IF NOT EXISTS UserProfile(UserId INTEGER PRIMARY KEY, " +
+                " fullname NVACHAR(100), date_of_birth VARCHAR(20), gender INTEGER," +
+                " email VARCHAR(100), phone VARCHAR(20), address NVARCHAR(200))");
     }
 
 

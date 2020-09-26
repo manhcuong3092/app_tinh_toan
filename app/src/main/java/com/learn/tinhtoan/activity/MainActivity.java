@@ -32,6 +32,7 @@ import com.learn.tinhtoan.fragment.HomeFragment;
 import com.learn.tinhtoan.fragment.NotificationFragment;
 import com.learn.tinhtoan.fragment.ProfileFragment;
 import com.learn.tinhtoan.fragment.TodoFragment;
+import com.learn.tinhtoan.model.UserProfile;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public static User currentUser;
     public static DataUser currentDataUser;
     public static UserAchievement currentUserAchievement;
+    public static UserProfile currentUserProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +58,21 @@ public class MainActivity extends AppCompatActivity {
         currentUser = (User) intent.getSerializableExtra("user");
         currentDataUser = (DataUser) intent.getSerializableExtra("userData");
         currentUserAchievement = (UserAchievement) intent.getSerializableExtra("userAchievement");
+        currentUserProfile = (UserProfile) intent.getSerializableExtra("userProfile");
 
         //bottom navbar
         bottomNav.setOnNavigationItemSelectedListener(bottomNavListener);
 
         //side bar
         navigationView.setNavigationItemSelectedListener(navListener);
+
+        //
+        navigationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setAvatarNavigation();
+            }
+        });
 
         //Sửa theme là noActionBar
         setSupportActionBar(toolbar);
@@ -72,12 +83,16 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         //set cac gia tri cho navbar
+        setAvatarNavigation();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+    }
+
+    private void setAvatarNavigation() {
         byte[] avatar = currentUser.getImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(avatar, 0, avatar.length);
         imgAvatar.setImageBitmap(bitmap);
         txtName.setText(currentUser.getName());
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
 
     private void mapping() {
@@ -115,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_logout:
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     //Xoa tat cac activity truoc do
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     break;
                 case R.id.nav_share:

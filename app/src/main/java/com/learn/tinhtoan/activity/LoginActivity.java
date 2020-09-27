@@ -161,6 +161,9 @@ public class LoginActivity extends AppCompatActivity {
         database.queryData("CREATE TABLE IF NOT EXISTS UserProfile(UserId INTEGER PRIMARY KEY, " +
                 " fullname NVACHAR(100), date_of_birth VARCHAR(20), gender INTEGER," +
                 " email VARCHAR(100), phone VARCHAR(20), address NVARCHAR(200))");
+
+        database.queryData("CREATE TABLE IF NOT EXISTS Tasks(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "userId INTEGER NOT NULL, content NVARCHAR(200) NOT NULL, status INTEGER NOT NULL)");
     }
 
 

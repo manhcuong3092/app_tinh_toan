@@ -7,19 +7,29 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.learn.tinhtoan.adapter.TaskAdapter;
 import com.learn.tinhtoan.model.DataUser;
 import com.learn.tinhtoan.R;
 import com.learn.tinhtoan.model.User;
@@ -96,15 +106,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mapping() {
-        navigationView  = findViewById(R.id.navigationView);
-        toolbar         = findViewById(R.id.toolbar);
-        bottomNav       = findViewById(R.id.bottomNav);
-        drawerLayout    = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.navigationView);
+        toolbar = findViewById(R.id.toolbar);
+        bottomNav = findViewById(R.id.bottomNav);
+        drawerLayout = findViewById(R.id.drawerLayout);
 
         View headerView = navigationView.getHeaderView(0);
-        imgAvatar       = headerView.findViewById(R.id.navigation_avatar);
-        txtName         = headerView.findViewById(R.id.navigation_name);
-        txtEmail        = headerView.findViewById(R.id.navigation_email);
+        imgAvatar = headerView.findViewById(R.id.navigation_avatar);
+        txtName = headerView.findViewById(R.id.navigation_name);
+        txtEmail = headerView.findViewById(R.id.navigation_email);
     }
 
     private NavigationView.OnNavigationItemSelectedListener navListener = new NavigationView.OnNavigationItemSelectedListener() {
@@ -140,8 +150,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Tính năng đang phát triển", Toast.LENGTH_SHORT).show();
                     break;
             }
-            if(selectedFragment != null){
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment, "fragment").commit();
             }
             return true;
         }
@@ -169,12 +179,82 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    public void showDialogEditTask(final int id, String content) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_edit_task);
+
+        final EditText edtTaskEdit = dialog.findViewById(R.id.editTextEditTask);
+        Button btnConfirm = dialog.findViewById(R.id.buttonConfirmEdit);
+        Button btnCancel = dialog.findViewById(R.id.buttonCancelEdit);
+
+        edtTaskEdit.setText(content);
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String newContent = edtTaskEdit.getText().toString();
+                if (newContent.length() > 200) {
+                    Toast.makeText(MainActivity.this, "Nội dung không được quá 200 ký tự", Toast.LENGTH_SHORT).show();
+                } else {
+                    LoginActivity.database.queryData("UPDATE Tasks SET content = '" + newContent +
+                            "' WHERE Id = " + id + ";");
+                    setChangeDataAdapter();
+                    Toast.makeText(MainActivity.this, "Đã cập nhật.", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void showDialogDeleteTask(final int id, String content) {
+        AlertDialog.Builder dialogDelete = new AlertDialog.Builder(this);
+        dialogDelete.setMessage("Bạn có muốn xóa công việc '" + content + "' này không?");
+        dialogDelete.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                LoginActivity.database.queryData("DELETE FROM Tasks WHERE Id = " + id + ";");
+                Toast.makeText(MainActivity.this, "Đã xóa.", Toast.LENGTH_SHORT).show();
+                setChangeDataAdapter();
+            }
+        });
+        dialogDelete.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        dialogDelete.show();
+    }
+
+    public void setFinishTask(int id) {
+        LoginActivity.database.queryData("DELETE FROM Tasks WHERE Id = " + id + ";");
+        setChangeDataAdapter();
+    }
+
+
+    public void setChangeDataAdapter() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        TodoFragment todoFragment = (TodoFragment) fragmentManager.findFragmentByTag("fragment");
+        todoFragment.getTaskList();
+    }
+
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
+
 }

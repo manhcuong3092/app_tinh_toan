@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,6 +76,13 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
             }
         });
 
+        ibtnTriNho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Tính năng đang phát triển.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -91,6 +99,8 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
             int score = cursor.getInt(1);
             txtScore.setText("Điểm: " + score);
         }
+
+        txtTitle.setText("Danh hiệu: " + MainActivity.currentUserAchievement.getTitle());
 
     }
 

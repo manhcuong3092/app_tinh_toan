@@ -18,8 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.learn.tinhtoan.Database;
+import com.learn.tinhtoan.fragment.NotificationFragment;
 import com.learn.tinhtoan.model.Achievement;
 import com.learn.tinhtoan.model.DataUser;
+import com.learn.tinhtoan.model.Notification;
 import com.learn.tinhtoan.model.Operation;
 import com.learn.tinhtoan.adapter.OperationAdapter;
 import com.learn.tinhtoan.R;
@@ -215,9 +217,17 @@ public class ExerciseActivity extends AppCompatActivity {
         //update userData and userAchievement
         updateUserData();
         updateUserAchievement();
-
+        //show dialog result
         showDiaglogResult(exactAnswerCount, score, userScore);
+        //add notification
+        addNotification();
         btnSubmit.setEnabled(false);
+    }
+
+    private void addNotification() {
+        String title = "Tính toán";
+        String content = "Bạn vừa đạt được " + score + " điểm.";
+        MainActivity.notificationList.add(new Notification(title, content));
     }
 
 

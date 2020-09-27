@@ -32,6 +32,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.learn.tinhtoan.adapter.TaskAdapter;
 import com.learn.tinhtoan.model.DataUser;
 import com.learn.tinhtoan.R;
+import com.learn.tinhtoan.model.Notification;
 import com.learn.tinhtoan.model.User;
 import com.learn.tinhtoan.model.UserAchievement;
 import com.learn.tinhtoan.fragment.AchievementFragment;
@@ -43,6 +44,8 @@ import com.learn.tinhtoan.fragment.NotificationFragment;
 import com.learn.tinhtoan.fragment.ProfileFragment;
 import com.learn.tinhtoan.fragment.TodoFragment;
 import com.learn.tinhtoan.model.UserProfile;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     public static DataUser currentDataUser;
     public static UserAchievement currentUserAchievement;
     public static UserProfile currentUserProfile;
+    public static ArrayList<Notification> notificationList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

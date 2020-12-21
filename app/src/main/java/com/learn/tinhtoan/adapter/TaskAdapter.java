@@ -77,28 +77,30 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         if (status == Task.UNFINISHED) {
             holder.cbFinish.setChecked(false);
         }
-        holder.txtContent.setText(taskList.get(position).getContent());
+        if(taskList.size() > 0){
+            holder.txtContent.setText(taskList.get(position).getContent());
 
-        holder.cbFinish.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                context.setFinishTask(taskList.get(position).getId());
-            }
-        });
+            holder.cbFinish.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    context.setFinishTask(taskList.get(position).getId());
+                }
+            });
 
-        holder.ibtnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                context.showDialogEditTask(taskList.get(position).getId(), taskList.get(position).getContent());
-            }
-        });
+            holder.ibtnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.showDialogEditTask(taskList.get(position).getId(), taskList.get(position).getContent());
+                }
+            });
 
-        holder.ibtnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                context.showDialogDeleteTask(taskList.get(position).getId(), taskList.get(position).getContent());
-            }
-        });
+            holder.ibtnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.showDialogDeleteTask(taskList.get(position).getId(), taskList.get(position).getContent());
+                }
+            });
+        }
     }
 
 

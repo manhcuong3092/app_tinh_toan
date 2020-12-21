@@ -42,7 +42,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
     View view;
     ImageView imgIcon;
-    ImageButton ibtnTinhToan, ibtnTriNho;
+    ImageButton ibtnTinhToan;
     CircleImageView imgAvatar;
     TextView txtScore, txtName, txtTitle, txtTemp, txtTempMaxMin, txtHumidity, txtStatus, txtWind, txtCloud, txtCity, txtDay;
 
@@ -73,13 +73,6 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
                 startActivity(intent);
 
-            }
-        });
-
-        ibtnTriNho.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Tính năng đang phát triển.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -183,7 +176,6 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
         txtScore    = view.findViewById(R.id.textViewScore);
         imgIcon     = view.findViewById(R.id.imageViewWeatherIcon);
         imgAvatar   = view.findViewById(R.id.circleImageViewAvatar);
-        ibtnTriNho  = view.findViewById(R.id.imageButtonTriNho);
         ibtnTinhToan = view.findViewById(R.id.imageButtonTinhToan);
     }
 }

@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         //Sửa theme là noActionBar
         setSupportActionBar(toolbar);
 
@@ -124,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView.OnNavigationItemSelectedListener navListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            //autoClose Navber
+            drawerLayout.closeDrawers();
             Fragment selectedFragment = null;
             switch (item.getItemId()) {
                 case R.id.nav_profile:
@@ -201,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 if (newContent.length() > 200) {
                     Toast.makeText(MainActivity.this, "Nội dung không được quá 200 ký tự", Toast.LENGTH_SHORT).show();
                 } else {
-                    LoginActivity.database.queryData("UPDATE Tasks SET content = '" + newContent +
+                    LoginActivity.database.queryData("UPDATE Task SET content = '" + newContent +
                             "' WHERE Id = " + id + ";");
                     setChangeDataAdapter();
                     Toast.makeText(MainActivity.this, "Đã cập nhật.", Toast.LENGTH_SHORT).show();
@@ -225,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         dialogDelete.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                LoginActivity.database.queryData("DELETE FROM Tasks WHERE Id = " + id + ";");
+                LoginActivity.database.queryData("DELETE FROM Task WHERE Id = " + id + ";");
                 Toast.makeText(MainActivity.this, "Đã xóa.", Toast.LENGTH_SHORT).show();
                 setChangeDataAdapter();
             }
@@ -240,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFinishTask(int id) {
-        LoginActivity.database.queryData("DELETE FROM Tasks WHERE Id = " + id + ";");
+        LoginActivity.database.queryData("DELETE FROM Task WHERE Id = " + id + ";");
         setChangeDataAdapter();
     }
 

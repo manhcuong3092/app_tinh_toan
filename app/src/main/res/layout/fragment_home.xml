@@ -213,63 +213,33 @@
         android:layout_height="wrap_content"
         android:text="Cập nhật ngày "/>
 
-    <LinearLayout
-        android:weightSum="2"
-        android:layout_marginTop="30dp"
-        android:layout_below="@id/textViewDay"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+    <ImageButton
+        android:id="@+id/imageButtonTinhToan"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/textViewDay"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="100dp"
+        android:background="@null"
+        android:padding="20dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/playgames" />
 
-        <LinearLayout
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:padding="20dp"
-                android:background="@null"
-                android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/playgames"
-                android:id="@+id/imageButtonTinhToan"/>
-
-            <TextView
-                android:textColor="#fff"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tạo game tính toán nhanh"
-                android:gravity="center"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:padding="20dp"
-                android:background="@null"
-                android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/gamecontroller"
-                android:id="@+id/imageButtonTriNho"/>
-
-            <TextView
-                android:textColor="#fff"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tạo game trí nhớ"
-                android:gravity="center"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageButtonTinhToan"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="128dp"
+        android:gravity="center"
+        android:text="Tạo game tính toán nhanh"
+        android:textColor="#fff" />
 
 
 </RelativeLayout>

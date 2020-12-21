@@ -90,7 +90,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
                         android:gravity="center"
-                        android:inputType="number"
+                        android:inputType="numberSigned"
                         android:textColor="#000"
                         android:textSize="30dp"
                         android:layout_toRightOf="@id/textViewEqual"/>

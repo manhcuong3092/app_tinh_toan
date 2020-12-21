@@ -51,9 +51,9 @@ public class TodoFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_todo, container, false);
         taskList = new ArrayList<>();
         adapter = new TaskAdapter(taskList, (MainActivity) getActivity());
-
-        getTaskList();
         anhXa();
+        getTaskList();
+
 
         ibtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +69,6 @@ public class TodoFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         return view;
     }
 
@@ -90,7 +89,7 @@ public class TodoFragment extends Fragment {
                 if (content.equals("")) {
                     Toast.makeText(getActivity(), "Vui lòng nhập tên công việc.", Toast.LENGTH_SHORT).show();
                 } else {
-                    db.queryData("INSERT INTO Tasks VALUES(null, " + user.getId() + ", '" + content + "', " +
+                    db.queryData("INSERT INTO Task VALUES(null, " + user.getId() + ", '" + content + "', " +
                             "0)");
                     dialog.dismiss();
                     Toast.makeText(getActivity(), "Đã thêm.", Toast.LENGTH_SHORT).show();
@@ -112,9 +111,8 @@ public class TodoFragment extends Fragment {
 
     public void getTaskList() {
         Cursor cursorTask = db.getData("" +
-                "SELECT * FROM Tasks WHERE userId = " + user.getId());
+                "SELECT * FROM Task WHERE userId = " + user.getId());
         taskList.clear();
-
         while (cursorTask.moveToNext()) {
             int id = cursorTask.getInt(0);
             int userId = cursorTask.getInt(1);
@@ -122,7 +120,10 @@ public class TodoFragment extends Fragment {
             int status = cursorTask.getInt(3);
             taskList.add(new Task(id, userId, content, status));
         }
-        adapter.notifyDataSetChanged();
+        if (!recyclerView.isComputingLayout() && recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+            adapter.notifyDataSetChanged();
+        }
+//        adapter.notifyDataSetChanged();
     }
 
     private void anhXa() {

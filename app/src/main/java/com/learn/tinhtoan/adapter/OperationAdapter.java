@@ -70,7 +70,7 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
         //xet trang thai
         switch (opList.get(position).getStatus()) {
             case Operation.UNCHECKED:
-                holder.imgResult.setImageResource(R.mipmap.ic_launcher);
+                holder.imgResult.setImageResource(R.drawable.null_bg);
                 break;
             case Operation.EXACT:
                 holder.imgResult.setImageResource(R.drawable.correct);

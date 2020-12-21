@@ -93,6 +93,7 @@
                         android:inputType="numberSigned"
                         android:textColor="#000"
                         android:textSize="30dp"
+                        android:maxLength="9"
                         android:layout_toRightOf="@id/textViewEqual"/>
 
                     <TextView
@@ -117,6 +118,7 @@
                         android:inputType="number"
                         android:textColor="#700000"
                         android:textSize="30sp"
+                        android:maxLength="9"
                         android:layout_toRightOf="@id/textViewRemainder"/>
 
                 </RelativeLayout>
@@ -140,9 +142,9 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
+        android:src="@drawable/null_bg"
         android:background="#fff"
         android:padding="5dp"
-        android:src="@mipmap/ic_launcher"
         android:id="@+id/imageViewResult"
         android:layout_weight="1"
         android:layout_width="0dp"

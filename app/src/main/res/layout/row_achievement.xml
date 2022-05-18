@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:tools="http://schemas.android.com/tools"
-    android:background="#1DB2F6"
+    android:background="#dddddd"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp"
+    android:paddingBottom="2dp"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:id="@+id/textViewTitleExercise"
+        android:textSize="30sp"
+        android:textColor="#0DBA0D"
+        android:textStyle="bold"
+        android:text="Luyện tập"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_below="@+id/textViewTitleExercise"
+        android:id="@+id/textViewChon"
+        android:textColor="#001BB6"
+        android:layout_margin="5dp"
+        android:textStyle="bold"
+        android:text="Chọn kiểu chơi"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/textViewChonPhepTinh"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:layout_margin="5dp"
+        android:text="Loại phép tính (nhiều)"
+        android:layout_below="@+id/textViewChon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1Exercise"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/textViewChonPhepTinh"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/checkBoxAdd"
+                android:text="Phép cộng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/checkBoxSubtract"
+                android:text="Phép trừ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/checkBoxMultiple"
+                android:text="Phép nhân"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/checkBoxDivide"
+                android:text="Phép chia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewChonLevel"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:paddingTop="10dp"
+        android:layout_margin="5dp"
+        android:text="Mức độ"
+        android:layout_below="@+id/linearLayout1Exercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroupExercise"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/textViewChonLevel"
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/radioButtonEasy"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Dễ"/>
+
+        <RadioButton
+            android:id="@+id/radioButtonNormal"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Trung bình"/>
+
+        <RadioButton
+            android:id="@+id/radioButtonHard"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Khó"/>
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3Exercise"
+        android:layout_below="@id/radioGroupExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewChonSoCau"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:text="Số câu hỏi: "
+            android:layout_below="@+id/linearLayout2Exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/editTextSoCauHoi"
+            android:text="10"
+            android:gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textColor="#A9000000"
+            android:textSize="20dp"
+            android:text="câu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="3"
+        android:id="@+id/linearLayout4Exercise"
+        android:layout_below="@+id/linearLayout3Exercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button10Cau"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="10"/>
+
+        <Button
+            android:id="@+id/button15Cau"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="15"/>
+
+        <Button
+            android:id="@+id/button20Cau"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="20"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5Exercise"
+        android:layout_below="@id/linearLayout4Exercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewChonThoiGian"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:text="Thời gian làm: "
+            android:layout_below="@+id/linearLayout2Exercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/editTextSoGiay"
+            android:text="30"
+            android:gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textColor="#A9000000"
+            android:textSize="20dp"
+            android:text="s/câu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6Exercise"
+        android:weightSum="3"
+        android:layout_below="@+id/linearLayout5Exercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button20Giay"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="20"/>
+
+        <Button
+            android:id="@+id/button30Giay"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="30"/>
+
+        <Button
+            android:id="@+id/button45Giay"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="45"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout6Exercise"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="155dp"
+        android:layout_marginLeft="155dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
+        android:background="@drawable/btn_button"
+        android:text="Bắt đầu"
+        android:textColor="#fff" />
+
+
+</RelativeLayout>

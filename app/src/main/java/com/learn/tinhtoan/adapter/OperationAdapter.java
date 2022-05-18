@@ -71,12 +71,15 @@ public class OperationAdapter extends RecyclerView.Adapter<OperationAdapter.View
         switch (opList.get(position).getStatus()) {
             case Operation.UNCHECKED:
                 holder.imgResult.setImageResource(R.drawable.null_bg);
+                holder.imgResult.setVisibility(View.GONE);
                 break;
             case Operation.EXACT:
                 holder.imgResult.setImageResource(R.drawable.correct);
+                holder.imgResult.setVisibility(View.VISIBLE);
                 break;
             case Operation.WRONG:
                 holder.imgResult.setImageResource(R.drawable.wrong);
+                holder.imgResult.setVisibility(View.VISIBLE);
                 break;
         }
 

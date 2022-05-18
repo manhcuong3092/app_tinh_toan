@@ -3,31 +3,28 @@ package com.learn.tinhtoan.fragment;
 import android.app.Dialog;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.learn.tinhtoan.Database;
 import com.learn.tinhtoan.R;
 import com.learn.tinhtoan.activity.LoginActivity;
 import com.learn.tinhtoan.activity.MainActivity;
-import com.learn.tinhtoan.adapter.AchievementAdapter;
 import com.learn.tinhtoan.adapter.TaskAdapter;
 import com.learn.tinhtoan.model.Task;
 import com.learn.tinhtoan.model.User;
@@ -40,8 +37,8 @@ public class TodoFragment extends Fragment {
     TaskAdapter adapter;
     RecyclerView recyclerView;
     public static ArrayList<Task> taskList;
-    ImageButton ibtnAdd;
-    Switch swDisplay;
+    FloatingActionButton fabAdd, fabViewDone;
+    SearchView searchView;
     Database db = LoginActivity.database;
     User user = MainActivity.currentUser;
 
@@ -55,10 +52,49 @@ public class TodoFragment extends Fragment {
         getTaskList();
 
 
-        ibtnAdd.setOnClickListener(new View.OnClickListener() {
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addTask();
+            }
+        });
+
+        fabViewDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(adapter.isViewDone()) {
+                    fabViewDone.setImageResource(R.drawable.ic_baseline_done_24);
+                    adapter.setViewDone(false);
+                } else {
+                    fabViewDone.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+                    adapter.setViewDone(true);
+                }
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Cursor cursorTask = db.getData("" +
+                        "SELECT * FROM Task WHERE userId = " + user.getId() +
+                        " AND content LIKE '%" + s + "%'");
+                taskList.clear();
+                while (cursorTask.moveToNext()) {
+                    int id = cursorTask.getInt(0);
+                    int userId = cursorTask.getInt(1);
+                    String content = cursorTask.getString(2);
+                    int status = cursorTask.getInt(3);
+                    taskList.add(new Task(id, userId, content, status));
+                }
+                if (!recyclerView.isComputingLayout() && recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+                    adapter.notifyDataSetChanged();
+                }
+                return true;
             }
         });
 
@@ -127,8 +163,10 @@ public class TodoFragment extends Fragment {
     }
 
     private void anhXa() {
-        ibtnAdd = view.findViewById(R.id.imageButtonAddTask);
+        fabAdd = view.findViewById(R.id.imageButtonAddTask);
+        fabViewDone = view.findViewById(R.id.fabDone);
         recyclerView = view.findViewById(R.id.recyclerViewTasks);
+        searchView = view.findViewById(R.id.searchView);
     }
 
 }

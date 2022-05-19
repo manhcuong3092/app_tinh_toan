@@ -1,16 +1,19 @@
 package com.learn.tinhtoan.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.learn.tinhtoan.Database;
-import com.learn.tinhtoan.fragment.NotificationFragment;
+import com.learn.tinhtoan.NotificationService;
 import com.learn.tinhtoan.model.Achievement;
 import com.learn.tinhtoan.model.DataUser;
 import com.learn.tinhtoan.model.Notification;
@@ -31,6 +34,7 @@ import com.learn.tinhtoan.model.UserAchievement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 public class ExerciseActivity extends AppCompatActivity {
@@ -230,6 +234,15 @@ public class ExerciseActivity extends AppCompatActivity {
         String title = "Tính toán";
         String content = "Bạn vừa đạt được " + score + " điểm.";
         MainActivity.notificationList.add(new Notification(title, content));
+        int notificationId = (int) new Date().getTime();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationService.CHANNEL_ID)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                .setDefaults(NotificationCompat.DEFAULT_SOUND);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(notificationId, builder.build());
     }
 
 

@@ -35,8 +35,7 @@ import java.util.ArrayList;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     User user = MainActivity.currentUser;
-    Database db = LoginActivity.database;
-
+    Database database;
     ArrayList<Task> taskList;
     MainActivity context;
     boolean viewDone;
@@ -45,6 +44,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         this.taskList = taskList;
         this.context = context;
         this.viewDone = false;
+        database = new Database(context);
     }
 
     public boolean isViewDone() {
@@ -153,7 +153,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 if (newContent.length() > 200) {
                     Toast.makeText(context, "Nội dung không được quá 200 ký tự", Toast.LENGTH_SHORT).show();
                 } else {
-                    LoginActivity.database.queryData("UPDATE Task SET content = '" + newContent +
+                    database.queryData("UPDATE Task SET content = '" + newContent +
                             "' WHERE Id = " + id + ";");
                     setChangeDataAdapter();
                     Toast.makeText(context, "Đã cập nhật.", Toast.LENGTH_SHORT).show();
@@ -177,7 +177,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         dialogDelete.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                LoginActivity.database.queryData("DELETE FROM Task WHERE Id = " + id + ";");
+                database.queryData("DELETE FROM Task WHERE Id = " + id + ";");
                 Toast.makeText(context, "Đã xóa.", Toast.LENGTH_SHORT).show();
                 setChangeDataAdapter();
             }
@@ -192,7 +192,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
     public void setFinishTask(Task task) {
-        LoginActivity.database.queryData("UPDATE Task set status = " + task.getStatus() + " WHERE Id = " +
+        database.queryData("UPDATE Task set status = " + task.getStatus() + " WHERE Id = " +
                 task.getId() + ";");
         setChangeDataAdapter();
     }
@@ -204,8 +204,4 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         TodoFragment todoFragment = (TodoFragment) fragmentManager.findFragmentByTag("fragment");
         todoFragment.getTaskList();
     }
-
-
-
-
 }

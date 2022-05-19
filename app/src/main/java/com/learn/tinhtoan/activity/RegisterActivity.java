@@ -3,7 +3,6 @@ package com.learn.tinhtoan.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
@@ -30,14 +29,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import static com.learn.tinhtoan.activity.LoginActivity.database;
-
 public class RegisterActivity extends AppCompatActivity {
 
     Button btnRegister;
     EditText edtUserName, edtPassword, edtPassword2;
     ImageView imgHinh;
     ImageButton ibtnCamera, ibtnFolder;
+    Database database;
 
     final int REQUEST_CODE_CAMERA = 123;
     final int REQUEST_CODE_FOLDER = 456;
@@ -48,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         mapping();
+        database = new Database(this);
 
         ibtnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,13 +83,13 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (!password.equals(password2)){
                     Toast.makeText(RegisterActivity.this, "Mật khẩu nhập lại không khớp.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Cursor cursor = Database.findUserName(name);
+                    Cursor cursor = database.findUserName(name);
                     if (cursor.moveToFirst() && cursor.getCount() > 0) {
                         Toast.makeText(RegisterActivity.this, "Tên tài khoản này đã tồn tại", Toast.LENGTH_SHORT).show();
                     } else {
                         //add user
                         database.addUser(name, password, hinhAnh);
-                        int id = Database.findUserId(name);
+                        int id = database.findUserId(name);
 
                         database.addUserData(id);
                         database.addUserAchievement(id);

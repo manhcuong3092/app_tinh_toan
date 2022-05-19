@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.learn.tinhtoan.Database;
 import com.learn.tinhtoan.adapter.TaskAdapter;
 import com.learn.tinhtoan.model.DataUser;
 import com.learn.tinhtoan.R;
@@ -54,18 +55,20 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
     Toolbar toolbar;
     ImageView imgAvatar;
-    TextView txtName, txtEmail;
+    TextView txtName, txtTitle;
     public static User currentUser;
     public static DataUser currentDataUser;
     public static UserAchievement currentUserAchievement;
     public static UserProfile currentUserProfile;
     public static ArrayList<Notification> notificationList = new ArrayList<>();
+    Database database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        database = new Database(this);
         mapping();
 
         Intent intent = getIntent();
@@ -108,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeByteArray(avatar, 0, avatar.length);
         imgAvatar.setImageBitmap(bitmap);
         txtName.setText(currentUser.getName());
+        txtTitle.setText(currentUserAchievement.getTitle());
     }
 
     private void mapping() {
@@ -119,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         imgAvatar = headerView.findViewById(R.id.navigation_avatar);
         txtName = headerView.findViewById(R.id.navigation_name);
-        txtEmail = headerView.findViewById(R.id.navigation_title);
+        txtTitle = headerView.findViewById(R.id.navigation_title);
     }
 
     private NavigationView.OnNavigationItemSelectedListener navListener = new NavigationView.OnNavigationItemSelectedListener() {
@@ -185,75 +189,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
-
-    public void showDialogEditTask(final int id, String content) {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_edit_task);
-
-        final EditText edtTaskEdit = dialog.findViewById(R.id.editTextEditTask);
-        Button btnConfirm = dialog.findViewById(R.id.buttonConfirmEdit);
-        Button btnCancel = dialog.findViewById(R.id.buttonCancelEdit);
-
-        edtTaskEdit.setText(content);
-
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String newContent = edtTaskEdit.getText().toString();
-                if (newContent.length() > 200) {
-                    Toast.makeText(MainActivity.this, "Nội dung không được quá 200 ký tự", Toast.LENGTH_SHORT).show();
-                } else {
-                    LoginActivity.database.queryData("UPDATE Task SET content = '" + newContent +
-                            "' WHERE Id = " + id + ";");
-                    setChangeDataAdapter();
-                    Toast.makeText(MainActivity.this, "Đã cập nhật.", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-    public void showDialogDeleteTask(final int id, String content) {
-        AlertDialog.Builder dialogDelete = new AlertDialog.Builder(this);
-        dialogDelete.setMessage("Bạn có muốn xóa công việc '" + content + "' này không?");
-        dialogDelete.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                LoginActivity.database.queryData("DELETE FROM Task WHERE Id = " + id + ";");
-                Toast.makeText(MainActivity.this, "Đã xóa.", Toast.LENGTH_SHORT).show();
-                setChangeDataAdapter();
-            }
-        });
-        dialogDelete.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        dialogDelete.show();
-    }
-
-    public void setFinishTask(int id) {
-        LoginActivity.database.queryData("DELETE FROM Task WHERE Id = " + id + ";");
-        setChangeDataAdapter();
-    }
-
-
-    public void setChangeDataAdapter() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        TodoFragment todoFragment = (TodoFragment) fragmentManager.findFragmentByTag("fragment");
-        todoFragment.getTaskList();
-    }
 
     @Override
     public void onBackPressed() {

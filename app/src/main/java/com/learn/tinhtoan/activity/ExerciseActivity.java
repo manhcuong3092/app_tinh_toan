@@ -46,6 +46,7 @@ public class ExerciseActivity extends AppCompatActivity {
     ArrayList<Operation> opList;
     Intent intent;
     OperationAdapter adapter;
+    Database database;
 
     //gán tham chiếu đến cùng địa chỉ ô nhớ
     User user = MainActivity.currentUser;
@@ -59,6 +60,7 @@ public class ExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercise);
 
         mapping();
+        database = new Database(this);
 
         intent = getIntent();
 
@@ -247,7 +249,7 @@ public class ExerciseActivity extends AppCompatActivity {
         dataUser.setSoCauTraLoi(dataUser.getSoCauTraLoi() + opList.size());
         dataUser.setSoCauDung(dataUser.getSoCauDung() + exactAnswerCount);
         dataUser.setSoLanTinhToan(dataUser.getSoLanTinhToan() + 1);
-        Database.updateUserData(dataUser);
+        database.updateUserData(dataUser);
     }
 
     private void updateUserAchievement() {
@@ -353,7 +355,7 @@ public class ExerciseActivity extends AppCompatActivity {
                 userAchievement.setUnder15Seconds(Achievement.BRONZE_TROPHY);
             }
         }
-        Database.updateUserAchievement(userAchievement);
+        database.updateUserAchievement(userAchievement);
     }
 
     //hiện dialog kết quả

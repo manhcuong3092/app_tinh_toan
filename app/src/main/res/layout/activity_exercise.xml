@@ -33,7 +33,7 @@
             android:layout_weight="6"
             android:gravity="center"
             android:text="10:00"
-            android:textColor="#26FF00"
+            android:textColor="#000000"
             android:textSize="30dp" />
 
         <ImageButton

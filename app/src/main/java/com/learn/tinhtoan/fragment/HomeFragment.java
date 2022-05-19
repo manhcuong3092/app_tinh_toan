@@ -45,13 +45,14 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
     ImageButton ibtnTinhToan;
     CircleImageView imgAvatar;
     TextView txtScore, txtName, txtTitle, txtTemp, txtTempMaxMin, txtHumidity, txtStatus, txtWind, txtCloud, txtCity, txtDay;
-
+    Database database;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         mapping();
+        database = new Database(container.getContext());
 
         getCurrentWeatherData("Hanoi");
         setUserInfor();
@@ -81,7 +82,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
     private void setUserInfor() {
         User user = MainActivity.currentUser;
-        Cursor cursor = Database.findUserData(user.getId());
+        Cursor cursor = database.findUserData(user.getId());
         txtName.setText(user.getName());
 
         byte[] avatar = user.getImage();

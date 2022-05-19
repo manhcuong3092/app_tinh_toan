@@ -39,7 +39,7 @@ public class TodoFragment extends Fragment {
     public static ArrayList<Task> taskList;
     FloatingActionButton fabAdd, fabViewDone;
     SearchView searchView;
-    Database db = LoginActivity.database;
+    Database db;
     User user = MainActivity.currentUser;
 
     @Nullable
@@ -49,8 +49,8 @@ public class TodoFragment extends Fragment {
         taskList = new ArrayList<>();
         adapter = new TaskAdapter(taskList, (MainActivity) getActivity());
         anhXa();
+        db = new Database(container.getContext());
         getTaskList();
-
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override

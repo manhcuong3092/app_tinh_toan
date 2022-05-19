@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.learn.tinhtoan.Database;
 import com.learn.tinhtoan.R;
-import com.learn.tinhtoan.activity.LoginActivity;
 import com.learn.tinhtoan.activity.MainActivity;
 import com.learn.tinhtoan.model.User;
 
@@ -23,12 +23,14 @@ public class ChangePasswordFragment extends Fragment {
     EditText edtOldPassword, edtNewPassword, edtNewPasswordAgain;
     Button btnChanePassword;
     User user = MainActivity.currentUser;
+    Database database;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_change_password, container, false);
         mapping();
+        database = new Database(container.getContext());
 
         btnChanePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +55,7 @@ public class ChangePasswordFragment extends Fragment {
             return;
         }
         user.setPassword(newPass);
-        LoginActivity.database.updateUser(user);
+        database.updateUser(user);
         Toast.makeText(getActivity(), "Đổi mật khẩu thành công.", Toast.LENGTH_SHORT).show();
 
         edtNewPasswordAgain.setText("");

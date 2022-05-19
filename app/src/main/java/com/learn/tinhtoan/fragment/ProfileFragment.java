@@ -3,7 +3,6 @@ package com.learn.tinhtoan.fragment;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -57,12 +56,14 @@ public class ProfileFragment extends Fragment {
     ImageButton ibtnEdit, ibtnCamera, ibtnGallery;
     ImageView imgAvatar;
     Button btnFinish;
+    Database database;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         mapping();
+        database = new Database(container.getContext());
         //Ẩn các button khi chưa nhấn edit
         loadUserProfile();
         setDisableView();
@@ -163,8 +164,8 @@ public class ProfileFragment extends Fragment {
             gender = 0;
         }
         userProfile.setGender(gender);
-        LoginActivity.database.updateUser(user);
-        Database.updateUserProfile(userProfile);
+        database.updateUser(user);
+        database.updateUserProfile(userProfile);
     }
 
     private void setEnableView() {

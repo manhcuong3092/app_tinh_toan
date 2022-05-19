@@ -21,16 +21,15 @@ public class LoginActivity extends AppCompatActivity {
 
     Button btnLogin, btnRegister;
     EditText edtUsername, edtPassword;
-    public static Database database;
+    Database database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        database = new Database(this);
 
         mapping();
-
-        initDB();
 
         //chuyen sang homeactivity
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(username.length() == 0 || password.length() == 0){
                     Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ thông tin.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Cursor cursor = Database.findUserName(username);
+                    Cursor cursor = database.findUserName(username);
                     if(cursor.moveToFirst() && cursor.getCount() > 0){ ///neu tim thay
                         if (cursor.getString(2).equals(password)){
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private UserProfile createUserProfile(User user) {
-        Cursor cursor3 = Database.findUserProfile(user.getId());
+        Cursor cursor3 = database.findUserProfile(user.getId());
         cursor3.moveToFirst();
         UserProfile userProfile = new UserProfile(
                 cursor3.getInt(0),
@@ -99,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private UserAchievement createUserAchievement(User user) {
-        Cursor cursor2 = Database.findUserAchievement(user.getId());
+        Cursor cursor2 = database.findUserAchievement(user.getId());
         cursor2.moveToFirst();
         UserAchievement userAchievement = new UserAchievement(
                 cursor2.getInt(0),
@@ -121,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private DataUser createDataUser(User user){
-        Cursor cursor1 = Database.findUserData(user.getId());
+        Cursor cursor1 = database.findUserData(user.getId());
         cursor1.moveToFirst();
         DataUser userData = new DataUser(
                 cursor1.getInt(0),
@@ -140,32 +139,6 @@ public class LoginActivity extends AppCompatActivity {
         );
         return userData;
     }
-
-    private void initDB() {
-        database = new Database(this, "User.sqlite", null, 1);
-        database.queryData("CREATE TABLE IF NOT EXISTS User(Id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " Username VARCHAR(150) NOT NULL, Password VARCHAR(150) NOT NULL, Image BLOB)");
-
-        database.queryData("CREATE TABLE IF NOT EXISTS UserData(UserId INTEGER PRIMARY KEY, " +
-                "Diem INTEGER NOT NULL, SoCauTraLoi INTEGER NOT NULL, SoCauDung INTEGER NOT NULL," +
-                " SoCauCong INTEGER NOT NULL, SoCauTru INTEGER NOT NULL, SoCauNhan INTEGER NOT NULL," +
-                " SoCauDe INTEGER NOT NULL, SoCauTB INTEGER NOT NULL, SoCauKho INTEGER NOT NULL," +
-                " SoCauChia INTEGER NOT NULL, SoLanTinhToan INTEGER NOT NULL, SoLanMiniGame INTEGER NOT NULL)");
-
-        database.queryData("CREATE TABLE IF NOT EXISTS UserAchievement(UserId INTEGER PRIMARY KEY, " +
-                "level INTEGER NOT NULL, title NVACHAR(100) NOT NULL, dung_het INTEGER NOT NULL," +
-                " sai_het INTEGER NOT NULL, am_diem INTEGER NOT NULL, clear_hard INTEGER NOT NULL, clear_operators INTEGER NOT NULL," +
-                " under_15_seconds INTEGER NOT NULL, clear_add INTEGER NOT NULL, clear_sub INTEGER NOT NULL," +
-                " clear_mul INTEGER NOT NULL, clear_div INTEGER NOT NULL, clear_minigames INTEGER NOT NULL)");
-
-        database.queryData("CREATE TABLE IF NOT EXISTS UserProfile(UserId INTEGER PRIMARY KEY, " +
-                " fullname NVACHAR(100), date_of_birth VARCHAR(20), gender INTEGER," +
-                " email VARCHAR(100), phone VARCHAR(20), address NVARCHAR(200))");
-
-        database.queryData("CREATE TABLE IF NOT EXISTS Task(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "userId INTEGER NOT NULL, content NVARCHAR(200) NOT NULL, status INTEGER NOT NULL)");
-    }
-
 
     private void mapping() {
         btnLogin    = findViewById(R.id.btnLogin);

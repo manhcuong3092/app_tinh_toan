@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
-        android:background="@drawable/background5"
+        android:background="@drawable/background7"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

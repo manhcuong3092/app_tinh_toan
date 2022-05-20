@@ -213,33 +213,39 @@
         android:layout_height="wrap_content"
         android:text="Cập nhật ngày "/>
 
-    <ImageButton
-        android:id="@+id/imageButtonTinhToan"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/textViewDay"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="100dp"
-        android:background="@null"
-        android:padding="20dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/playgames" />
+        android:gravity="center"
+        android:layout_marginTop="4dp">
+
+        <ImageButton
+            android:id="@+id/imageButtonTinhToan"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/textViewDay"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:padding="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/start" />
+    </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageButtonTinhToan"
+        android:layout_below="@+id/linear"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="122dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="128dp"
+        android:layout_marginStart="127dp"
+        android:layout_marginTop="-11dp"
+        android:layout_marginEnd="121dp"
         android:gravity="center"
-        android:text="Tạo game tính toán nhanh"
+        android:text="Tạo game \ntính toán nhanh"
         android:textColor="#fff" />
-
 
 </RelativeLayout>

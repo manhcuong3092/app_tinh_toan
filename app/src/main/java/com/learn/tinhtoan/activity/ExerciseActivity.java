@@ -231,7 +231,7 @@ public class ExerciseActivity extends AppCompatActivity {
     private void resultHandle() {
         int userScore = dataUser.getDiem();
         //diem = socaudung*heso - socausai*5
-        score = score - (opList.size() - exactAnswerCount) * 5;
+        score = score - (opList.size() - exactAnswerCount) * Operation.WRONG_PENALTY;
         //update userscore
         userScore += score;
 

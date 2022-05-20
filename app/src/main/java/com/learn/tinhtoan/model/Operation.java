@@ -14,6 +14,10 @@ public class Operation {
     public static final int NORMAL = 10;
     public static final int HARD = 25;
 
+    public static final int MAX_EASY = 50;
+    public static final int MAX_NORMAL = 1000;
+    public static final int MAX_HARD = 20000;
+
     public static final int ADD_SUBTRACT_COEFFICIENT = 1;
     public static final int MULTIPLE_COEFFICIENT = 7;
     public static final int DIVIDE_COEFFICIENT = 5;

@@ -152,16 +152,31 @@ public class ExerciseActivity extends AppCompatActivity {
     //ham kiểm tra kết quả
     private void checkResultProcess(int i) {
         String answerString = opList.get(i).getAnswer();
-        if (answerString.equals("")) {
-            opList.get(i).setStatus(Operation.WRONG);
-            adapter.notifyDataSetChanged();
-            return;
-        }
-        int answer = Integer.parseInt(answerString);
         int operator = opList.get(i).getOperator();
         int a = opList.get(i).getA();
         int b = opList.get(i).getB();
         int r = 0;
+
+        if (answerString.equals("")) {
+            opList.get(i).setStatus(Operation.WRONG);
+            switch (operator) {
+                case Operation.ADD:
+                    opList.get(i).setExactAnswer("Đáp án: " + (a + b));
+                    break;
+                case Operation.SUBTRACT:
+                    opList.get(i).setExactAnswer("Đáp án: " + (a - b));
+                    break;
+                case Operation.MULTIPLE:
+                    opList.get(i).setExactAnswer("Đáp án: " + (a * b));
+                    break;
+                case Operation.DIVIDE:
+                    opList.get(i).setExactAnswer("Đáp án: " + (a / b) + " dư " + (a % b));
+                    break;
+            }
+            adapter.notifyDataSetChanged();
+            return;
+        }
+        int answer = Integer.parseInt(answerString);
         if (!opList.get(i).getRemainderAnswer().equals("")) {
             r = Integer.parseInt(opList.get(i).getRemainderAnswer());
         }
@@ -234,7 +249,7 @@ public class ExerciseActivity extends AppCompatActivity {
         String title = "Tính toán";
         String content = "Bạn vừa đạt được " + score + " điểm.";
         MainActivity.notificationList.add(new Notification(title, content));
-        int notificationId = (int) new Date().getTime();
+        int notificationId = Math.abs((int) new Date().getTime());
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationService.CHANNEL_ID)
                 .setContentTitle(title)
@@ -279,22 +294,22 @@ public class ExerciseActivity extends AppCompatActivity {
         }
         if(achievementScore >= lv1 + lv2 + lv3 + lv4){
             userAchievement.setLevel(5);
-            userAchievement.setTitle("VIP Pro");
+            userAchievement.setTitle(Achievement.TITLE_LV5);
         } else if (achievementScore >= lv1 + lv2 + lv3 ){
             userAchievement.setLevel(4);
-            userAchievement.setTitle("Cao thủ");
+            userAchievement.setTitle(Achievement.TITLE_LV4);
         } else if (achievementScore >= lv1 + lv2){
             userAchievement.setLevel(3);
-            userAchievement.setTitle("Chuyên nghiệp");
+            userAchievement.setTitle(Achievement.TITLE_LV3);
         } else if (achievementScore >= lv1){
             userAchievement.setLevel(2);
-            userAchievement.setTitle("Nghiệp dư");
+            userAchievement.setTitle(Achievement.TITLE_LV2);
         } else if (achievementScore >= 0){
             userAchievement.setLevel(1);
-            userAchievement.setTitle("Tập sự");
+            userAchievement.setTitle(Achievement.TITLE_LV1);
         } else {
             userAchievement.setLevel(0);
-            userAchievement.setTitle("Gà");
+            userAchievement.setTitle(Achievement.TITLE_LV0);
         }
         //sai het
         if (exactAnswerCount == 0){
@@ -429,13 +444,13 @@ public class ExerciseActivity extends AppCompatActivity {
         int max = 5;
         if (easy) {
             doKho = Operation.EASY;
-            max = 50;
+            max = Operation.MAX_EASY;
         } else if (normal) {
             doKho = Operation.NORMAL;
-            max = 1000;
+            max = Operation.MAX_NORMAL;
         } else if (hard) {
             doKho = Operation.HARD;
-            max = 20000;
+            max = Operation.MAX_HARD;
         }
 
         //dem so luong phep tinh

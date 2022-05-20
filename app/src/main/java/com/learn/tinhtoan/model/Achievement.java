@@ -12,6 +12,13 @@ public class Achievement {
     public static final int lv3Tolv4 = 300;
     public static final int lv4Tolv5 = 400;
 
+    public static final String TITLE_LV0 = "Gà";
+    public static final String TITLE_LV1 = "Tập sự";
+    public static final String TITLE_LV2 = "Nghiệp dư";
+    public static final String TITLE_LV3 = "Chuyên nghiệp";
+    public static final String TITLE_LV4 = "Cao thủ";
+    public static final String TITLE_LV5 = "VIP Pro";
+
     private String title;
     private String current;
     private int trophy;

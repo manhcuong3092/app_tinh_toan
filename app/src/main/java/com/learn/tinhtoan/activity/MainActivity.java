@@ -156,7 +156,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.nav_share:
-                    Toast.makeText(MainActivity.this, "Tính năng đang phát triển", Toast.LENGTH_SHORT).show();
+                    Intent shareIntent = new Intent(Intent.ACTION_SENDTO);
+                    shareIntent.setData(Uri.parse("mailto:"));
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Tinh Toan");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT , "Username: " + currentUser.getName() + "\nTitle: " + currentUserAchievement.getTitle());
+                    startActivity(shareIntent);
                     break;
                 case R.id.nav_send:
                     Intent sendIntent = new Intent(Intent.ACTION_VIEW);
